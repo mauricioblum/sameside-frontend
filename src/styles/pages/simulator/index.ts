@@ -14,8 +14,8 @@ export const Container = styled.div`
     border-bottom: solid 1px #e6eaee;
     background: #fff;
 
-    @media (max-width: 360px) {
-      padding: 11px 16px 13px 16px;
+    @media (max-width: 415px) {
+      padding: 11px 8px 13px 8px;
     }
 
     p {
@@ -29,11 +29,11 @@ export const Container = styled.div`
       margin-left: 12px;
     }
 
-    a,
-    svg {
+    a {
       text-decoration: none;
       margin-left: auto;
       cursor: pointer;
+      text-decoration: none;
     }
   }
 
