@@ -3,18 +3,21 @@ import Head from 'next/head';
 
 import { Container } from '../styles/pages/Home';
 
-const Home: React.FC = () => {
-  return (
-    <Container>
-      <Head>
-        <title>Homepage</title>
-      </Head>
+import samesideLogo from '../assets/sameside-logo.png';
 
-      <main>Teste</main>
+const Home: React.FC = () => (
+  <Container>
+    <Head>
+      <title>SameSide | Gestão de Patrimônio</title>
+    </Head>
 
-      <footer>Footer</footer>
-    </Container>
-  );
-};
+    <main>
+      <div>
+        <img src={samesideLogo} alt="SameSide" />
+        <h1>Bem vindo...</h1>
+      </div>
+    </main>
+  </Container>
+);
 
 export default Home;

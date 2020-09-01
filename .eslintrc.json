@@ -27,11 +27,14 @@
     "space-before-function-paren": "off",
     "react/prop-types": "off",
     "arrow-parens": "off",
+    "import/prefer-default-export": "off",
     "react/jsx-filename-extension": [
       2,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
     "react/jsx-props-no-spreading": "off",
+    "implicit-arrow-linebreak": "off",
+    "comma-dangle": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
