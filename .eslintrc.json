@@ -1,15 +1,16 @@
 {
   "env": {
     "browser": true,
-    "es6": true,
+    "es2020": true,
     "node": true,
     "jest": true
   },
   "extends": [
     "plugin:react/recommended",
-    "airbnb",
+    "standard",
     "plugin:@typescript-eslint/recommended",
     "prettier/@typescript-eslint",
+    "prettier/standard",
     "prettier/react"
   ],
   "parser": "@typescript-eslint/parser",
