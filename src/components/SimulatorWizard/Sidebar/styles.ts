@@ -8,16 +8,19 @@ export const Container = styled.div`
   border-right: solid 1px #e6eaee;
 `;
 
-export const SidebarItem = styled.div<{ active?: boolean }>`
+export const SidebarItem = styled.div<{ active?: boolean; hasValue?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px #e9e9e9;
-  padding: 11px 9px 2px 31px;
+  padding: 11px 9px 7px 31px;
+  max-height: 50px;
   background: ${props => (props.active ? '#ecedee' : '#fff')};
+  cursor: pointer;
 
   > div {
     display: flex;
+    align-items: ${props => (props.hasValue ? 'flex-start' : 'center')};
     height: 50px;
     padding: 10px 0px;
     svg {

@@ -1,0 +1,119 @@
+.input-range__slider {
+  appearance: none;
+  background: #fff;
+  border-radius: 100%;
+  cursor: pointer;
+  display: block;
+  height: 23px;
+  margin-left: -0.5rem;
+  margin-top: -1rem;
+  outline: none;
+  position: absolute;
+  top: 50%;
+  width: 23px;
+  box-shadow: 0 2px 4px 0 rgba(140, 140, 140, 0.45),
+    0 -2px 4px 0 rgba(140, 140, 140, 0.43);
+  transition: transform 0.2s;
+}
+.input-range__slider:active {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px 0 rgba(140, 140, 140, 0.45),
+    0 -2px 8px 0 rgba(140, 140, 140, 0.43);
+}
+.input-range__slider:hover {
+  transform: scale(1.1);
+}
+.input-range--disabled .input-range__slider {
+  background: #cccccc;
+  border: 1px solid #cccccc;
+  box-shadow: none;
+  transform: none;
+}
+.input-range__slider-container {
+  transition: left 0.3s ease-out;
+}
+
+.input-range__label {
+  color: #aaaaaa;
+  font-family: 'Helvetica Neue', san-serif;
+  font-size: 0.8rem;
+  transform: translateZ(0);
+  white-space: nowrap;
+}
+
+.input-range__label--min,
+.input-range__label--max {
+  display: none;
+}
+
+.input-range__label--min {
+  left: 0;
+}
+
+.input-range__label--max {
+  right: 0;
+}
+
+.input-range__label--value {
+  position: absolute;
+  top: -1.8rem;
+  display: none;
+}
+
+.input-range__label-container {
+  left: -50%;
+  position: relative;
+}
+.input-range__label--max .input-range__label-container {
+  left: 50%;
+}
+
+.input-range__track {
+  background: #e6e6e6;
+  border-radius: 100px;
+  cursor: pointer;
+  display: block;
+  height: 10px;
+  position: relative;
+  transition: left 0.3s ease-out, width 0.3s ease-out;
+}
+.input-range--disabled .input-range__track {
+  background: #eeeeee;
+}
+
+.input-range__track--background {
+  left: 0;
+  margin-top: -0.15rem;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+.input-range__track--active {
+  background: #2b90f7;
+}
+
+.input-range {
+  height: 1rem;
+  position: relative;
+  width: 100%;
+  min-width: 574px;
+}
+
+@media (max-width: 930px) {
+  .input-range {
+    min-width: 474px;
+  }
+}
+
+@media (max-width: 780px) {
+  .input-range {
+    min-width: 374px;
+  }
+}
+
+@media (max-width: 640px) {
+  .input-range {
+    min-width: auto;
+  }
+}

@@ -6,6 +6,10 @@ import { FaUser } from 'react-icons/fa';
 import SimulatorWizard from 'components/SimulatorWizard';
 import { Container } from '../../styles/pages/simulator/form';
 
+const initialFormData = {
+  yearlyFamilyIncome: 54000
+};
+
 const SimulatorHome: React.FC = () => (
   <Container>
     <Head>
