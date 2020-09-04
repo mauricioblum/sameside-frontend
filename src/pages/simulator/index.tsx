@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { FaUser } from 'react-icons/fa';
 
+import Button from 'components/Button';
 import { Container } from '../../styles/pages/simulator/index';
 
 const SimulatorHome: React.FC = () => (
@@ -33,8 +34,8 @@ const SimulatorHome: React.FC = () => (
       </p>
 
       <div>
-        <Link href="/simulator/form">
-          <button type="button">Iniciar Simulação</button>
+        <Link href="/simulator/form" passHref>
+          <Button>Iniciar Simulação</Button>
         </Link>
       </div>
     </main>

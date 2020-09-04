@@ -15,6 +15,7 @@ import {
 import Slider from 'components/Slider';
 
 import NumberInput from 'components/NumberInput';
+import Result from 'components/Result';
 import theme from '../../styles/theme';
 import { Container } from './styles';
 import Sidebar from './Sidebar';
@@ -56,23 +57,11 @@ const SimulatorWizard: React.FC = () => {
 
   const [formData, setFormData] = useState<SimulatorData>({});
 
+  const [resultEnabled, setResultEnabled] = useState(false);
+
   const handleFormChange = useCallback(
     (field: keyof SimulatorData, value: number) => {
-      switch (field) {
-        case 'yearlyFamilyIncome':
-          setFormData({ ...formData, yearlyFamilyIncome: value });
-          break;
-        case 'age':
-          setFormData({ ...formData, age: value !== 0 ? value : undefined });
-          break;
-        case 'ageRetirement':
-          setFormData({
-            ...formData,
-            ageRetirement: value !== 0 ? value : undefined
-          });
-          break;
-        default:
-      }
+      setFormData({ ...formData, [field]: value });
     },
     [formData]
   );
@@ -139,65 +128,135 @@ const SimulatorWizard: React.FC = () => {
         id: 3,
         icon: <FaPercentage color={theme.colors.text} />,
         title: 'Valor a economizar por mês',
+        value: formData.savingsMonthlyValue,
         type: 'currency',
-        filled: false,
-        active: isActive(3)
+        filled: !!formData.savingsMonthlyValue,
+        active: isActive(3),
+        input: (
+          <Slider
+            value={formData.savingsMonthlyValue || 5000}
+            onSliderChange={value =>
+              handleFormChange('savingsMonthlyValue', value)
+            }
+          />
+        )
       },
       {
         id: 4,
         icon: <FaPiggyBank color={theme.colors.text} />,
         title: 'Valor atual de investimentos',
+        value: formData.currentInvestmentValue,
         type: 'currency',
-        filled: false,
-        active: isActive(4)
+        filled: !!formData.currentInvestmentValue,
+        active: isActive(4),
+        input: (
+          <Slider
+            value={formData.currentInvestmentValue || 5000}
+            onSliderChange={value =>
+              handleFormChange('currentInvestmentValue', value)
+            }
+          />
+        )
       },
       {
         id: 5,
         icon: <FaChartLine color={theme.colors.text} />,
         title: 'Aumento de renda esperado',
+        value: formData.expectedRaiseValue,
         type: 'currency',
-        filled: false,
-        active: isActive(5)
+        filled: !!formData.expectedRaiseValue,
+        active: isActive(5),
+        input: (
+          <Slider
+            value={formData.expectedRaiseValue || 5000}
+            onSliderChange={value =>
+              handleFormChange('expectedRaiseValue', value)
+            }
+          />
+        )
       },
       {
         id: 6,
         icon: <FaFunnelDollar color={theme.colors.text} />,
         title: 'Valor para aposentadoria da renda atual',
+        value: formData.retirementValue,
         type: 'currency',
-        filled: false,
-        active: isActive(6)
+        filled: !!formData.retirementValue,
+        active: isActive(6),
+        input: (
+          <Slider
+            value={formData.retirementValue || 5000}
+            onSliderChange={value => handleFormChange('retirementValue', value)}
+          />
+        )
       },
       {
         id: 7,
         icon: <FaStopwatch color={theme.colors.text} />,
         title: 'Anos de pagamento de aposentadoria',
-        type: 'currency',
-        filled: false,
-        active: isActive(7)
+        value:
+          formData.paymentRetirementYears &&
+          `${formData.paymentRetirementYears} anos`,
+        type: 'text',
+        filled: !!formData.paymentRetirementYears,
+        active: isActive(7),
+        input: (
+          <NumberInput
+            value={formData.paymentRetirementYears}
+            placeholder="Insira os anos para pagamento da aposentadoria"
+            onValueChange={value =>
+              handleFormChange('paymentRetirementYears', value)
+            }
+          />
+        )
       },
       {
         id: 8,
         icon: <FaMoneyCheckAlt color={theme.colors.text} />,
         title: 'Outras rendas/Renda do INSS',
+        value: formData.otherProfits,
         type: 'currency',
-        filled: false,
-        active: isActive(8)
+        filled: !!formData.otherProfits,
+        active: isActive(8),
+        input: (
+          <Slider
+            value={formData.otherProfits || 5000}
+            onSliderChange={value => handleFormChange('otherProfits', value)}
+          />
+        )
       },
       {
         id: 9,
         icon: <FaHandHoldingUsd color={theme.colors.text} />,
         title: 'Renda de trabalho na aposentadoria',
+        value: formData.workProfitRetirement,
         type: 'currency',
-        filled: false,
-        active: isActive(9)
+        filled: !!formData.workProfitRetirement,
+        active: isActive(9),
+        input: (
+          <Slider
+            value={formData.workProfitRetirement || 5000}
+            onSliderChange={value =>
+              handleFormChange('workProfitRetirement', value)
+            }
+          />
+        )
       },
       {
         id: 10,
         icon: <FaBriefcase color={theme.colors.text} />,
         title: 'Anos a trabalhar',
-        type: 'currency',
-        filled: false,
-        active: isActive(10)
+        value: formData.yearsToWork && `${formData.yearsToWork} anos`,
+        type: 'text',
+        filled: !!formData.yearsToWork,
+        active: isActive(10),
+        input: (
+          <NumberInput
+            value={formData.yearsToWork}
+            placeholder="Insira os anos restantes a trabalhar"
+            onValueChange={value => handleFormChange('yearsToWork', value)}
+          />
+        )
       }
     ],
     [formData, handleFormChange, isActive]
@@ -213,10 +272,32 @@ const SimulatorWizard: React.FC = () => {
     [sidebarItems, selectedItem]
   );
 
+  const isAllFieldsFilled = useMemo(
+    () => !sidebarItems.some(item => item.filled === false),
+    [sidebarItems]
+  );
+
   return (
     <Container>
       <Sidebar items={sidebarItems} onClickItem={handleClickItem} />
-      <Answer item={activeItem} />
+      {resultEnabled ? (
+        <Result
+          data={{
+            yearsToRunOut: 92,
+            valueOnRetire: 624.48,
+            expenses: 68.205,
+            percentage: 90,
+            lastYearIncome: 75.783,
+            expensePerYearINSS: 0
+          }}
+        />
+      ) : (
+        <Answer
+          item={activeItem}
+          completed={isAllFieldsFilled}
+          onClickViewResult={() => setResultEnabled(true)}
+        />
+      )}
     </Container>
   );
 };

@@ -96,26 +96,6 @@ export const Container = styled.div`
       justify-content: center;
       align-items: center;
       padding: 56px 0;
-
-      > button {
-        cursor: pointer;
-        border: 0;
-        outline: 0;
-        background: ${props => props.theme.colors.primary};
-        color: #fff;
-        font-weight: bold;
-        font-size: 14px;
-        letter-spacing: -0.21px;
-        border-radius: 4px;
-        text-align: center;
-        padding: 9px 165px 11px 165px;
-        @media (max-width: 460px) {
-          padding: 9px 120px 11px 120px;
-        }
-        @media (max-width: 360px) {
-          padding: 9px 100px 11px 100px;
-        }
-      }
     }
   }
 `;

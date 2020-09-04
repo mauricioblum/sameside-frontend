@@ -47,6 +47,19 @@ export const Container = styled.div`
           letter-spacing: -0.3px;
           color: ${props => props.theme.colors.text};
         }
+        a.active {
+          font-weight: bold;
+          position: relative;
+          &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: -20px;
+            height: 4px;
+            width: 100%;
+            background: ${props => props.theme.colors.primary};
+          }
+        }
       }
     }
 
