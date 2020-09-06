@@ -1,10 +1,23 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
 export const Container = styled.div`
   padding: 52px 30px 55px 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  svg.fa-spin {
+    animation: ${rotate} 1.4s linear infinite;
+  }
 
   h1 {
     font-size: 26px;

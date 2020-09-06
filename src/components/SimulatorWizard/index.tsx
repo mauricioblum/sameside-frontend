@@ -3,19 +3,19 @@ import {
   FaHourglassHalf,
   FaCalendarAlt,
   FaUsers,
-  FaPercentage,
   FaPiggyBank,
   FaChartLine,
-  FaFunnelDollar,
   FaStopwatch,
   FaMoneyCheckAlt,
   FaHandHoldingUsd,
-  FaBriefcase
+  FaPercentage
 } from 'react-icons/fa';
 import Slider from 'components/Slider';
 
 import NumberInput from 'components/NumberInput';
 import Result from 'components/Result';
+import RangeSlider from 'components/RangeSlider';
+import { VaultIcon } from '../../assets/icons';
 import theme from '../../styles/theme';
 import { Container } from './styles';
 import Sidebar from './Sidebar';
@@ -26,12 +26,12 @@ export interface SimulatorData {
   ageRetirement?: number;
   yearlyFamilyIncome?: number;
   savingsMonthlyValue?: number;
-  currentInvestmentValue?: number;
+  realTaxAfterRetirement?: number;
   expectedRaiseValue?: number;
-  retirementValue?: number;
-  paymentRetirementYears?: number;
+  currentInvestments?: number;
+  lifeExpectancy?: number;
+  inssProfits?: number;
   otherProfits?: number;
-  workProfitRetirement?: number;
   yearsToWork?: number;
 }
 
@@ -58,6 +58,22 @@ const SimulatorWizard: React.FC = () => {
   const [formData, setFormData] = useState<SimulatorData>({});
 
   const [resultEnabled, setResultEnabled] = useState(false);
+  const [resultLoading, setResultLoading] = useState(false);
+
+  const fakeLoadingMethod = () =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('waiting...');
+        resolve();
+      }, 2000);
+    });
+
+  const fakeApiCall = async () => {
+    setResultEnabled(true);
+    setResultLoading(true);
+    await fakeLoadingMethod();
+    setResultLoading(false);
+  };
 
   const handleFormChange = useCallback(
     (field: keyof SimulatorData, value: number) => {
@@ -92,7 +108,7 @@ const SimulatorWizard: React.FC = () => {
       {
         id: 1,
         icon: <FaCalendarAlt color={theme.colors.text} />,
-        title: 'Idade na aposentadoria',
+        title: 'Idade da aposentadoria',
         type: 'text',
         value: formData.ageRetirement && `${formData.ageRetirement} anos`,
         filled: !!formData.ageRetirement,
@@ -107,12 +123,30 @@ const SimulatorWizard: React.FC = () => {
       },
       {
         id: 2,
+        icon: <FaStopwatch color={theme.colors.text} />,
+        title: 'Expectativa de Vida',
+        value: formData.lifeExpectancy && `${formData.lifeExpectancy} anos`,
+        type: 'text',
+        filled: !!formData.lifeExpectancy,
+        active: isActive(2),
+        description:
+          'Expectativa de vida média brasileira é 75 anos. Aconselhamos colocar no mínimo 10 anos a mais, que é a idade considerada no relatório.',
+        input: (
+          <NumberInput
+            value={formData.lifeExpectancy}
+            placeholder="Insira a expectativa de vida"
+            onValueChange={value => handleFormChange('lifeExpectancy', value)}
+          />
+        )
+      },
+      {
+        id: 3,
         icon: <FaUsers color={theme.colors.text} />,
-        title: 'Renda familiar anual',
+        title: 'Renda familiar mensal',
         type: 'currency',
         value: formData.yearlyFamilyIncome,
         filled: !!formData.yearlyFamilyIncome,
-        active: isActive(2),
+        active: isActive(3),
         input: (
           <Slider
             value={formData.yearlyFamilyIncome || 5000}
@@ -125,13 +159,13 @@ const SimulatorWizard: React.FC = () => {
           'Renda familiar é o somatório da renda individual dos moradores do mesmo domicílio. Entram no cálculo de renda: pensões; pensões alimentícias; salários; proventos; benefícios de previdência privada ou pública; comissões; rendimentos de trabalho não assalariado; dinheiro provido de atividades autônomas em geral.'
       },
       {
-        id: 3,
-        icon: <FaPercentage color={theme.colors.text} />,
-        title: 'Valor a economizar por mês',
+        id: 4,
+        icon: <FaPiggyBank color={theme.colors.text} />,
+        title: 'Valor economizado mensal',
         value: formData.savingsMonthlyValue,
         type: 'currency',
         filled: !!formData.savingsMonthlyValue,
-        active: isActive(3),
+        active: isActive(4),
         input: (
           <Slider
             value={formData.savingsMonthlyValue || 5000}
@@ -142,30 +176,47 @@ const SimulatorWizard: React.FC = () => {
         )
       },
       {
-        id: 4,
-        icon: <FaPiggyBank color={theme.colors.text} />,
-        title: 'Valor atual de investimentos',
-        value: formData.currentInvestmentValue,
+        id: 5,
+        icon: <VaultIcon color={theme.colors.text} />,
+        title: 'Investimentos financeiros atuais',
+        value: formData.currentInvestments,
         type: 'currency',
-        filled: !!formData.currentInvestmentValue,
-        active: isActive(4),
+        filled: !!formData.currentInvestments,
+        active: isActive(5),
         input: (
           <Slider
-            value={formData.currentInvestmentValue || 5000}
+            value={formData.currentInvestments || 5000}
             onSliderChange={value =>
-              handleFormChange('currentInvestmentValue', value)
+              handleFormChange('currentInvestments', value)
             }
           />
         )
       },
       {
-        id: 5,
+        id: 6,
+        icon: <FaPercentage color={theme.colors.text} />,
+        title: 'Taxas de juros real após aposentadoria',
+        value: formData.realTaxAfterRetirement,
+        type: 'percentage',
+        filled: !!formData.realTaxAfterRetirement,
+        active: isActive(6),
+        input: (
+          <RangeSlider
+            value={formData.realTaxAfterRetirement}
+            onSliderChange={value =>
+              handleFormChange('realTaxAfterRetirement', value)
+            }
+          />
+        )
+      },
+      {
+        id: 7,
         icon: <FaChartLine color={theme.colors.text} />,
         title: 'Aumento de renda esperado',
         value: formData.expectedRaiseValue,
         type: 'currency',
         filled: !!formData.expectedRaiseValue,
-        active: isActive(5),
+        active: isActive(7),
         input: (
           <Slider
             value={formData.expectedRaiseValue || 5000}
@@ -175,86 +226,38 @@ const SimulatorWizard: React.FC = () => {
           />
         )
       },
-      {
-        id: 6,
-        icon: <FaFunnelDollar color={theme.colors.text} />,
-        title: 'Valor para aposentadoria da renda atual',
-        value: formData.retirementValue,
-        type: 'currency',
-        filled: !!formData.retirementValue,
-        active: isActive(6),
-        input: (
-          <Slider
-            value={formData.retirementValue || 5000}
-            onSliderChange={value => handleFormChange('retirementValue', value)}
-          />
-        )
-      },
-      {
-        id: 7,
-        icon: <FaStopwatch color={theme.colors.text} />,
-        title: 'Anos de pagamento de aposentadoria',
-        value:
-          formData.paymentRetirementYears &&
-          `${formData.paymentRetirementYears} anos`,
-        type: 'text',
-        filled: !!formData.paymentRetirementYears,
-        active: isActive(7),
-        input: (
-          <NumberInput
-            value={formData.paymentRetirementYears}
-            placeholder="Insira os anos para pagamento da aposentadoria"
-            onValueChange={value =>
-              handleFormChange('paymentRetirementYears', value)
-            }
-          />
-        )
-      },
+
       {
         id: 8,
         icon: <FaMoneyCheckAlt color={theme.colors.text} />,
-        title: 'Outras rendas/Renda do INSS',
-        value: formData.otherProfits,
+        title: 'Renda do INSS e outros regimes de previdência público',
+        value: formData.inssProfits,
         type: 'currency',
-        filled: !!formData.otherProfits,
+        filled: !!formData.inssProfits,
         active: isActive(8),
+        description:
+          'Previsão de INSS valores atuais, valores esperados de outras previdências do setor público.',
         input: (
           <Slider
-            value={formData.otherProfits || 5000}
-            onSliderChange={value => handleFormChange('otherProfits', value)}
+            value={formData.inssProfits || 5000}
+            onSliderChange={value => handleFormChange('inssProfits', value)}
           />
         )
       },
       {
         id: 9,
         icon: <FaHandHoldingUsd color={theme.colors.text} />,
-        title: 'Renda de trabalho na aposentadoria',
-        value: formData.workProfitRetirement,
+        title: 'Outras rendas',
+        value: formData.otherProfits,
         type: 'currency',
-        filled: !!formData.workProfitRetirement,
+        filled: !!formData.otherProfits,
         active: isActive(9),
+        description:
+          'Considerar aqui outras rendas após aposentadoria, aluguéis, trabalho, pensões, e etc..',
         input: (
           <Slider
-            value={formData.workProfitRetirement || 5000}
-            onSliderChange={value =>
-              handleFormChange('workProfitRetirement', value)
-            }
-          />
-        )
-      },
-      {
-        id: 10,
-        icon: <FaBriefcase color={theme.colors.text} />,
-        title: 'Anos a trabalhar',
-        value: formData.yearsToWork && `${formData.yearsToWork} anos`,
-        type: 'text',
-        filled: !!formData.yearsToWork,
-        active: isActive(10),
-        input: (
-          <NumberInput
-            value={formData.yearsToWork}
-            placeholder="Insira os anos restantes a trabalhar"
-            onValueChange={value => handleFormChange('yearsToWork', value)}
+            value={formData.otherProfits || 5000}
+            onSliderChange={value => handleFormChange('otherProfits', value)}
           />
         )
       }
@@ -282,6 +285,7 @@ const SimulatorWizard: React.FC = () => {
       <Sidebar items={sidebarItems} onClickItem={handleClickItem} />
       {resultEnabled ? (
         <Result
+          loading={resultLoading}
           data={{
             yearsToRunOut: 92,
             valueOnRetire: 624.48,
@@ -295,7 +299,9 @@ const SimulatorWizard: React.FC = () => {
         <Answer
           item={activeItem}
           completed={isAllFieldsFilled}
-          onClickViewResult={() => setResultEnabled(true)}
+          onClickViewResult={() => {
+            fakeApiCall();
+          }}
         />
       )}
     </Container>

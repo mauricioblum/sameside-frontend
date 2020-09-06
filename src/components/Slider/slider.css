@@ -5,6 +5,7 @@
   cursor: pointer;
   display: block;
   height: 23px;
+  z-index: 5;
   margin-left: -0.5rem;
   margin-top: -1rem;
   outline: none;
@@ -14,6 +15,8 @@
   box-shadow: 0 2px 4px 0 rgba(140, 140, 140, 0.45),
     0 -2px 4px 0 rgba(140, 140, 140, 0.43);
   transition: transform 0.2s;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
 }
 .input-range__slider:active {
   transform: scale(1.1);

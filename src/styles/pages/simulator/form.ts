@@ -10,9 +10,15 @@ export const Container = styled.div`
     flex: 1;
     height: 55px;
     align-items: center;
+    justify-content: space-between;
     padding: 11px 33px 13px 30px;
     border-bottom: solid 1px #e6eaee;
     background: #fff;
+
+    div.logo {
+      display: flex;
+      align-items: center;
+    }
 
     @media (max-width: 415px) {
       padding: 11px 8px 13px 8px;
@@ -32,8 +38,6 @@ export const Container = styled.div`
     ul {
       display: flex;
       align-items: center;
-      margin-left: auto;
-      margin-right: auto;
       list-style: none;
       li {
         &:first-child {
@@ -65,7 +69,6 @@ export const Container = styled.div`
 
     a {
       text-decoration: none;
-      margin-left: auto;
       cursor: pointer;
       text-decoration: none;
     }

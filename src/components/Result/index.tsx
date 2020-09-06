@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { FaSpinner } from 'react-icons/fa';
 import Link from 'next/link';
 import Button from 'components/Button';
 import ResultLineChart from 'components/ResultLineChart';
@@ -16,9 +16,10 @@ export interface ResultData {
 
 export interface ResultProps {
   data: ResultData;
+  loading?: boolean;
 }
 
-const Result: React.FC<ResultProps> = ({ data }) => {
+const Result: React.FC<ResultProps> = ({ data, loading }) => {
   const {
     yearsToRunOut,
     valueOnRetire,
@@ -27,6 +28,14 @@ const Result: React.FC<ResultProps> = ({ data }) => {
     lastYearIncome,
     expensePerYearINSS
   } = data;
+
+  if (loading === true) {
+    return (
+      <Container>
+        <FaSpinner size={70} className="fa-spin" style={{ marginTop: 90 }} />
+      </Container>
+    );
+  }
 
   return (
     <Container>

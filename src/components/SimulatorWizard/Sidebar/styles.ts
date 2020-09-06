@@ -24,7 +24,7 @@ export const SidebarItem = styled.div<{ active?: boolean; hasValue?: boolean }>`
     height: 50px;
     padding: 10px 0px;
     svg {
-      opacity: ${props => (props.active ? 1 : 0.42)};
+      opacity: ${props => (props.hasValue ? 1 : 0.42)};
     }
     div.info {
       display: flex;
@@ -37,12 +37,12 @@ export const SidebarItem = styled.div<{ active?: boolean; hasValue?: boolean }>`
         font-style: normal;
         letter-spacing: -0.5px;
         line-height: 0.8;
-        opacity: ${props => (props.active ? 1 : 0.42)};
+        opacity: ${props => (props.hasValue ? 1 : 0.42)};
         color: ${props => props.theme.colors.text};
       }
       span {
         font-size: 15px;
-        opacity: ${props => (props.active ? 1 : 0.42)};
+        opacity: ${props => (props.hasValue ? 1 : 0.42)};
         font-weight: normal;
         font-stretch: normal;
         font-style: normal;

@@ -19,13 +19,15 @@ const SimulatorHome: React.FC = () => {
         <title>Simulador | Formulário</title>
       </Head>
       <nav>
-        <img
-          src="../sameside-logo.png"
-          alt="SameSide"
-          width="121"
-          height="31"
-        />
-        <p>GESTÃO DE PATRIMÔNIO</p>
+        <div className="logo">
+          <img
+            src="../sameside-logo.png"
+            alt="SameSide"
+            width="121"
+            height="31"
+          />
+          <p>GESTÃO DE PATRIMÔNIO</p>
+        </div>
         <ul>
           <li>
             <Link href="/simulator">

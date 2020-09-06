@@ -14,12 +14,13 @@ export const Container = styled.div`
     line-height: 1.47;
     letter-spacing: -0.47px;
     color: ${props => props.theme.colors.text};
-    margin-top: 156px;
+    margin-top: 86px;
     padding: 0 48px;
   }
 
   button {
     margin-top: 42px;
+    margin-bottom: 42px;
     cursor: pointer;
     border: 0;
     outline: 0;
