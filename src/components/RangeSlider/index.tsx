@@ -48,7 +48,7 @@ const RangeSlider: React.FC<SliderProps> = ({
         <LabelText>Conservador CP</LabelText>
         <LabelValue>7%</LabelValue>
       </Label>
-      <Label active={value > 10 && value < 17}>
+      <Label active={value > 10 && value < 15}>
         <LabelText>Arrojado</LabelText>
         <LabelValue>11%</LabelValue>
       </Label>
