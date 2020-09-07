@@ -116,7 +116,7 @@ const Report: React.FC = () => {
             </InfoBlock>
 
             <div className="buttons">
-              <Link href="/simulator/form" passHref>
+              <Link href="/simulator" passHref>
                 <Button onClick={clearData}>Nova Simulação</Button>
               </Link>
               <Button appearence="secondary" onClick={() => setOpen(true)}>

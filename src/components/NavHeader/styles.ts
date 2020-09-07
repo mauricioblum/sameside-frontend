@@ -15,6 +15,7 @@ export const Container = styled.div`
       align-items: center;
       flex: 1;
       margin-right: auto;
+      cursor: pointer;
       p {
         font-size: 10px;
         font-weight: 500;

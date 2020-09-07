@@ -11,33 +11,32 @@ const NavHeader: React.FC = () => {
   return (
     <Container>
       <nav>
-        <div className="logo">
-          <img
-            src="../sameside-logo.png"
-            alt="SameSide"
-            width="121"
-            height="31"
-          />
-          <p>GESTÃO DE PATRIMÔNIO</p>
-        </div>
+        <Link href="/" passHref>
+          <div className="logo">
+            <img
+              src="../sameside-logo.png"
+              alt="SameSide"
+              width="121"
+              height="31"
+            />
+            <p>GESTÃO DE PATRIMÔNIO</p>
+          </div>
+        </Link>
         <ul>
           <li>
-            <Link href="/simulator">
-              <a
-                className={router.pathname === '/simulator' ? 'active' : ''}
-                href="/simulator"
-              >
+            <Link href="/">
+              <a className={router.pathname === '/' ? 'active' : ''} href="/">
                 Início
               </a>
             </Link>
           </li>
           <li>
-            <Link href="/simulator/form">
+            <Link href="/simulator/">
               <a
                 className={
-                  router.pathname === '/simulator/form' ? 'active' : ''
+                  router.pathname.includes('simulator') ? 'active' : ''
                 }
-                href="/simulator/form"
+                href="/simulator"
               >
                 Simulador
               </a>
