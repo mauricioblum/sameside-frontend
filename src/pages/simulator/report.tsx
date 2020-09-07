@@ -6,6 +6,7 @@ import ResultLineChart from 'components/ResultLineChart';
 import Modal, { ModalTitle } from 'components/Modal';
 import Button from 'components/Button';
 import ContactForm, { ContactFormData } from 'components/ContactForm';
+import { useSimulation } from 'hooks/simulation';
 import {
   Container,
   InfoBlock,
@@ -14,6 +15,8 @@ import {
 
 const Report: React.FC = () => {
   const [open, setOpen] = useState(false);
+
+  const { clearData } = useSimulation();
 
   const handleSubmitForm = useCallback((data: ContactFormData) => {
     console.log(data);
@@ -114,7 +117,7 @@ const Report: React.FC = () => {
 
             <div className="buttons">
               <Link href="/simulator/form" passHref>
-                <Button>Nova Simulação</Button>
+                <Button onClick={clearData}>Nova Simulação</Button>
               </Link>
               <Button appearence="secondary" onClick={() => setOpen(true)}>
                 Solicite uma reunião de aconselhamento

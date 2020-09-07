@@ -49,9 +49,13 @@ export interface Item {
 
 export interface SimulatorProps {
   initialData?: SimulatorData;
+  onSubmitData?: (data: SimulatorData) => void;
 }
 
-const SimulatorWizard: React.FC<SimulatorProps> = ({ initialData }) => {
+const SimulatorWizard: React.FC<SimulatorProps> = ({
+  initialData,
+  onSubmitData
+}) => {
   const [selectedItem, setSelectedItem] = useState<Item | null>({
     id: 0,
     icon: <></>,
@@ -77,6 +81,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({ initialData }) => {
     setResultLoading(true);
     await fakeLoadingMethod();
     setResultLoading(false);
+    onSubmitData(formData);
   };
 
   const handleFormChange = useCallback(
@@ -298,7 +303,16 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({ initialData }) => {
             lastYearIncome: 75.783,
             expensePerYearINSS: 0
           }}
-        />
+        >
+          <Answer
+            isEditing
+            item={activeItem}
+            completed={isAllFieldsFilled}
+            onClickViewResult={() => {
+              fakeApiCall();
+            }}
+          />
+        </Result>
       ) : (
         <Answer
           item={activeItem}

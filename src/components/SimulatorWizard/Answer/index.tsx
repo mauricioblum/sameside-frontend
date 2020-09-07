@@ -1,13 +1,14 @@
 import React from 'react';
 import NumberFormat from 'react-number-format';
 import Button from 'components/Button';
-import { Container, Form } from './styles';
+import { Container, EditContainer, Form } from './styles';
 import { Item } from '..';
 
 export interface AnswerProps {
   item?: Item;
   completed?: boolean;
   onClickViewResult?(): void;
+  isEditing?: boolean;
 }
 
 const renderValue = (item: Item) => {
@@ -36,10 +37,23 @@ const renderValue = (item: Item) => {
 const Answer: React.FC<AnswerProps> = ({
   item,
   completed,
-  onClickViewResult
+  onClickViewResult,
+  isEditing
 }) => {
   if (!item) {
     return null;
+  }
+
+  if (isEditing) {
+    return (
+      <EditContainer>
+        <Form>
+          <p>{item.title}</p>
+          <div>{Boolean(item.value) && renderValue(item)}</div>
+          {item.input}
+        </Form>
+      </EditContainer>
+    );
   }
 
   return (

@@ -10,7 +10,7 @@ const rotate = keyframes`
   }
 `;
 export const Container = styled.div`
-  padding: 52px 30px 55px 50px;
+  padding: 52px 0 55px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,6 +72,37 @@ export const Container = styled.div`
     width: 100%;
     button:first-child {
       margin-right: 30px;
+    }
+  }
+
+  div.edit {
+    margin-top: 21px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-top: 1px solid #e6e6e6;
+    padding-top: 26px;
+    padding-bottom: 26px;
+    p {
+      margin-top: 0;
+      font-size: 18px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.67;
+      letter-spacing: -0.56px;
+      color: ${props => props.theme.colors.text};
+    }
+    button {
+      margin-top: 45px;
+    }
+    input {
+      margin-top: 2px;
+    }
+    div.input-range {
+      margin-top: 0px;
     }
   }
 `;

@@ -85,3 +85,7 @@ export const Form = styled.div`
     margin-top: 42px;
   }
 `;
+
+export const EditContainer = styled(Container)`
+  padding-top: 0;
+`;

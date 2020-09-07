@@ -12,11 +12,13 @@ interface SimulationData {
   inssProfits?: number;
   otherProfits?: number;
   yearsToWork?: number;
+  isEditing?: boolean;
 }
 
 interface SimulationContextData {
   data: SimulationData;
   updateData(data: SimulationData): void;
+  clearData(): void;
 }
 
 const SimulationContext = createContext<SimulationContextData>(
@@ -24,17 +26,18 @@ const SimulationContext = createContext<SimulationContextData>(
 );
 
 const SimulationProvider: React.FC = ({ children }) => {
-  const [data, setData] = useState<SimulationData>({
-    yearlyFamilyIncome: 54000,
-    lifeExpectancy: 85
-  });
+  const [data, setData] = useState<SimulationData>({});
 
   const updateData = useCallback((dataToUpdate: SimulationData) => {
     setData({ ...dataToUpdate });
   }, []);
 
+  const clearData = useCallback(() => {
+    setData({});
+  }, []);
+
   return (
-    <SimulationContext.Provider value={{ data, updateData }}>
+    <SimulationContext.Provider value={{ data, updateData, clearData }}>
       {children}
     </SimulationContext.Provider>
   );
