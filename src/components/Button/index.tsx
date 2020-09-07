@@ -27,13 +27,14 @@ export const StyledButton = styled.button<{ appearence?: string }>`
 
 export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   appearence?: 'primary' | 'secondary';
+  type?: 'button' | 'reset' | 'submit';
 }
 
 const Button: React.FC<ButtonProps> = props => {
-  const { children, appearence } = props;
+  const { children, appearence, type } = props;
 
   return (
-    <StyledButton type="button" {...props} appearence={appearence}>
+    <StyledButton type={type || 'button'} {...props} appearence={appearence}>
       {children}
     </StyledButton>
   );

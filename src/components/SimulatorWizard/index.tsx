@@ -47,7 +47,11 @@ export interface Item {
   description?: string;
 }
 
-const SimulatorWizard: React.FC = () => {
+export interface SimulatorProps {
+  initialData?: SimulatorData;
+}
+
+const SimulatorWizard: React.FC<SimulatorProps> = ({ initialData }) => {
   const [selectedItem, setSelectedItem] = useState<Item | null>({
     id: 0,
     icon: <></>,
@@ -55,7 +59,7 @@ const SimulatorWizard: React.FC = () => {
     type: 'currency'
   });
 
-  const [formData, setFormData] = useState<SimulatorData>({});
+  const [formData, setFormData] = useState<SimulatorData>(initialData || {});
 
   const [resultEnabled, setResultEnabled] = useState(false);
   const [resultLoading, setResultLoading] = useState(false);

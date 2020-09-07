@@ -19,7 +19,7 @@ export interface SliderProps {
   onSliderChange?(value: number): void;
 }
 const RangeSlider: React.FC<SliderProps> = ({
-  value = 1,
+  value = 0,
   maxValue = 18,
   onSliderChange
 }) => (
