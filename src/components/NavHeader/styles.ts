@@ -3,10 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.div`
   nav {
     display: flex;
-    flex: 1;
+    width: 100%;
     height: 55px;
     align-items: center;
-    justify-content: space-between;
     padding: 11px 33px 13px 30px;
     border-bottom: solid 1px #e6eaee;
     background: #fff;
@@ -14,27 +13,30 @@ export const Container = styled.div`
     div.logo {
       display: flex;
       align-items: center;
+      flex: 1;
+      margin-right: auto;
+      p {
+        font-size: 10px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 30px;
+        letter-spacing: 0.4px;
+        color: #879cb1;
+        margin-left: 12px;
+      }
     }
 
     @media (max-width: 415px) {
       padding: 11px 8px 13px 8px;
     }
 
-    p {
-      font-size: 10px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 30px;
-      letter-spacing: 0.4px;
-      color: #879cb1;
-      margin-left: 12px;
-    }
-
     ul {
       display: flex;
       align-items: center;
       list-style: none;
+      flex: 1;
+      margin-right: auto;
       li {
         &:first-child {
           margin-right: 40px;
@@ -67,6 +69,7 @@ export const Container = styled.div`
       text-decoration: none;
       cursor: pointer;
       text-decoration: none;
+      display: flex;
     }
   }
 `;
