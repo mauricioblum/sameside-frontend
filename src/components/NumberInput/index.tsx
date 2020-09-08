@@ -5,6 +5,7 @@ export interface NumberInputProps {
   value?: number;
   label?: string;
   onValueChange(value: number): void;
+  onBlur?(event: React.FocusEvent<HTMLInputElement>): void;
   placeholder?: string;
 }
 
@@ -34,6 +35,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
   value,
   label,
   onValueChange,
+  onBlur,
   placeholder
 }) => {
   const handleOnChange = useCallback(
@@ -56,6 +58,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
       maxLength={3}
       placeholder={placeholder}
       onChange={handleOnChange}
+      onBlur={onBlur}
     />
   );
 };

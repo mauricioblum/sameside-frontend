@@ -27,12 +27,12 @@ export interface SimulatorData {
   yearlyFamilyIncome?: number;
   savingsMonthlyValue?: number;
   realTaxAfterRetirement?: number;
-  expectedRaiseValue?: number;
   currentInvestments?: number;
   lifeExpectancy?: number;
   inssProfits?: number;
   otherProfits?: number;
   yearsToWork?: number;
+  isEditing?: boolean;
 }
 
 export interface Item {
@@ -73,16 +73,16 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
       setTimeout(() => {
         console.log('waiting...');
         resolve();
-      }, 2000);
+      }, 1500);
     });
 
-  const fakeApiCall = async () => {
+  const fakeApiCall = useCallback(async () => {
     setResultEnabled(true);
     setResultLoading(true);
     await fakeLoadingMethod();
     setResultLoading(false);
-    onSubmitData(formData);
-  };
+    onSubmitData({ ...formData, isEditing: initialData.isEditing });
+  }, [formData, onSubmitData, initialData.isEditing]);
 
   const handleFormChange = useCallback(
     (field: keyof SimulatorData, value: number) => {
@@ -111,6 +111,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
             value={formData.age}
             placeholder="Insira sua idade atual"
             onValueChange={value => handleFormChange('age', value)}
+            onBlur={() => initialData.isEditing && fakeApiCall()}
           />
         )
       },
@@ -219,24 +220,6 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         )
       },
       {
-        id: 7,
-        icon: <FaChartLine color={theme.colors.text} />,
-        title: 'Aumento de renda esperado',
-        value: formData.expectedRaiseValue,
-        type: 'currency',
-        filled: !!formData.expectedRaiseValue,
-        active: isActive(7),
-        input: (
-          <Slider
-            value={formData.expectedRaiseValue || 5000}
-            onSliderChange={value =>
-              handleFormChange('expectedRaiseValue', value)
-            }
-          />
-        )
-      },
-
-      {
         id: 8,
         icon: <FaMoneyCheckAlt color={theme.colors.text} />,
         title: 'Renda do INSS e outros regimes de previdência público',
@@ -271,7 +254,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         )
       }
     ],
-    [formData, handleFormChange, isActive]
+    [formData, handleFormChange, isActive, initialData.isEditing, fakeApiCall]
   );
 
   const handleClickItem = useCallback((item: Item) => {

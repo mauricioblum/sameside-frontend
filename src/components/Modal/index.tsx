@@ -46,7 +46,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClickClose, children }) => {
           outline: 'none',
           padding: '40px 70px',
           maxWidth: '660px',
-          minHeight: '70vh'
+          minHeight: '80vh'
         }
       }}
     >

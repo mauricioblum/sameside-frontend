@@ -33,7 +33,6 @@ const Result: React.FC<ResultProps> = ({ data, loading, children }) => {
   } = data;
 
   const [open, setOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
 
   const { data: simulationData, updateData } = useSimulation();
 
@@ -43,7 +42,6 @@ const Result: React.FC<ResultProps> = ({ data, loading, children }) => {
   }, []);
 
   const handleEdit = useCallback(() => {
-    setIsEditing(true);
     updateData({ ...simulationData, isEditing: true });
   }, [simulationData, updateData]);
 
@@ -75,7 +73,7 @@ const Result: React.FC<ResultProps> = ({ data, loading, children }) => {
         <Link href="/simulator/report" passHref>
           <a href="/simulator/report">Ver Relatório Completo</a>
         </Link>
-        {!isEditing ? (
+        {!simulationData.isEditing ? (
           <div className="buttons">
             <Button onClick={handleEdit}>Alterar dados da simulação</Button>
             <Button appearence="secondary" onClick={() => setOpen(true)}>

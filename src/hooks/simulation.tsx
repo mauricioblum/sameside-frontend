@@ -6,7 +6,6 @@ interface SimulationData {
   yearlyFamilyIncome?: number;
   savingsMonthlyValue?: number;
   realTaxAfterRetirement?: number;
-  expectedRaiseValue?: number;
   currentInvestments?: number;
   lifeExpectancy?: number;
   inssProfits?: number;

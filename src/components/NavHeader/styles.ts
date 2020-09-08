@@ -14,7 +14,6 @@ export const Container = styled.div`
       display: flex;
       align-items: center;
       flex: 1;
-      margin-right: auto;
       cursor: pointer;
       p {
         font-size: 10px;
@@ -37,7 +36,6 @@ export const Container = styled.div`
       align-items: center;
       list-style: none;
       flex: 1;
-      margin-right: auto;
       li {
         &:first-child {
           margin-right: 40px;
@@ -71,6 +69,7 @@ export const Container = styled.div`
       cursor: pointer;
       text-decoration: none;
       display: flex;
+      align-items: center;
     }
   }
 `;
