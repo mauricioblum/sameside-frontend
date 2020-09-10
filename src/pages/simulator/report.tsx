@@ -41,9 +41,9 @@ const Report: React.FC = () => {
               As suas economias para aposentadoria se esgotam com 94 anos.
             </Subtitle>
             <p>
-              • Seu plano fornece R$ 624.048 ao se aposentar. Isso pressupõe
-              despesas anuais de aposentadoria de R$ 68.205, que representam 90%
-              da receita do ano passado, de R$ 75.783. Isso inclui R$ 0 por ano
+              • Seu plano fornece R$ XXX.XXX ao se aposentar. Isso pressupõe
+              despesas anuais de aposentadoria de R$ XX.XXX, que representam 90%
+              da receita do ano passado, de R$ XX.XXX. Isso inclui R$ 0 por ano
               da Previdência Social.
             </p>
 
@@ -54,10 +54,10 @@ const Report: React.FC = () => {
               <p>
                 • Abrir conta conjunta Paulo e Marlova (quando Pedro for para
                 exterior incluir como co titular), para reserva de viagens em
-                torno de USD 50 mil
+                torno de USD XX mil
               </p>
               <p>
-                • Manter em torno de 20% do patrimônio financeiro alocado no
+                • Manter em torno de XX% do patrimônio financeiro alocado no
                 exterior via Keep Calm para finalidade de proteção patrimonial e
                 formar poupança adicional na Keep Calm para auxilio nos estudos
                 do Pedro no exterior (ganho tributário). Quando dinheiro for
@@ -69,7 +69,7 @@ const Report: React.FC = () => {
               <p>
                 • Abrir contas e investimentos da PF e da Keep Calm em banco de
                 primeira linha (Morgan Stanley), resgatando valores da Investors
-                Trust (verificar se manter saldo minimo de 15 mil USD reduz os
+                Trust (verificar se manter saldo minimo de XX mil USD reduz os
                 custos de resgate
               </p>
             </InfoBlock>
@@ -78,10 +78,10 @@ const Report: React.FC = () => {
               <Subtitle>Imóveis</Subtitle>
               <p>
                 • Reduzir no curto prazo investimentos em ativos de uso próximos
-                a R$ 1,5 milhões
+                a R$ XX milhões
               </p>
               <p>
-                • No longo prazo, buscar manter 30% do patrimônio em imóveis de
+                • No longo prazo, buscar manter XX% do patrimônio em imóveis de
                 uso. O restante do patrimônio deve estar direcionado para
                 geração de renda ou ganhos de capital
               </p>
@@ -91,10 +91,10 @@ const Report: React.FC = () => {
               <Subtitle>Seguros</Subtitle>
               <p>
                 • Enquanto liquidez estiver baixa, manter seguro de vida para
-                custear entre 1 e 2 anos do estilo de vida
+                custear entre X e X anos do estilo de vida
               </p>
               <p>
-                • Reavaliar em 2 a 3 anos a manutenção do seguro vida inteira ou
+                • Reavaliar em X a X anos a manutenção do seguro vida inteira ou
                 troca por um seguro a termo
               </p>
             </InfoBlock>
@@ -111,7 +111,7 @@ const Report: React.FC = () => {
               <Subtitle>Gestão Financeira</Subtitle>
               <p>
                 • Na medida do possível, reduzir despesas (observar que o grupo
-                Habitação e Lazer respondem por 58% das despesas)
+                Habitação e Lazer respondem por XX% das despesas)
               </p>
             </InfoBlock>
 
