@@ -31,6 +31,14 @@ export const Container = styled.div`
           height: 3px;
           background-color: #3490ff;
         }
+
+        @media (max-width: 780px) {
+          padding: 0 16px;
+          text-align: center;
+          &:after {
+            display: none;
+          }
+        }
       }
     }
   }

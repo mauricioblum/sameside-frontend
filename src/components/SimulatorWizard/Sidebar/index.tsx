@@ -48,7 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({ items, onClickItem }) => (
             {Boolean(item.value) && renderValue(item)}
           </div>
         </div>
-        {item.filled && <FaCheck color="#2b90f7" />}
+        {item.filled && <FaCheck color="#2b90f7" width={24} />}
       </SidebarItem>
     ))}
   </Container>

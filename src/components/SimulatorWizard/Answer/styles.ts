@@ -4,7 +4,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 149px;
+  justify-content: center;
+  padding: 25px;
 
   div + div > p {
     font-size: 15px;
@@ -58,6 +59,7 @@ export const Form = styled.div`
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
+    text-align: center;
     line-height: 1.2;
     letter-spacing: -0.78px;
     color: ${props => props.theme.colors.text};

@@ -24,7 +24,15 @@ export const Container = styled.div`
         letter-spacing: 0.4px;
         color: #879cb1;
         margin-left: 12px;
+
+        @media (max-width: 600px) {
+          display: none;
+        }
       }
+    }
+
+    @media (max-width: 600px) {
+      padding: 11px 8px 13px 8px;
     }
 
     @media (max-width: 415px) {
@@ -39,6 +47,12 @@ export const Container = styled.div`
       li {
         &:first-child {
           margin-right: 40px;
+          @media (max-width: 420px) {
+            margin-right: 20px;
+          }
+          @media (max-width: 350px) {
+            margin-right: 10px;
+          }
         }
         a {
           font-size: 14px;

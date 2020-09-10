@@ -3,7 +3,7 @@ import InputRange from 'react-input-range';
 
 export const IntervalContainer = styled.div`
   position: relative;
-  min-width: 700px;
+  min-width: 80vw;
 `;
 
 export const IntervalTrackOne = styled.div`
@@ -64,10 +64,41 @@ export const Label = styled.div<{ active?: boolean }>`
 
   h4 {
     font-weight: ${props => (props.active ? 'bold' : 'normal ')};
+    white-space: nowrap;
   }
 
   span {
     font-weight: ${props => (props.active ? 'bold' : 'normal ')};
+  }
+  @media (max-width: 780px) {
+    h4,
+    span {
+      font-size: 14px;
+    }
+  }
+  @media (max-width: 520px) {
+    h4,
+    span {
+      font-size: 12px;
+    }
+  }
+  @media (max-width: 440px) {
+    h4,
+    span {
+      font-size: 11px;
+    }
+  }
+  @media (max-width: 400px) {
+    h4,
+    span {
+      font-size: 10px;
+    }
+  }
+  @media (max-width: 360px) {
+    h4,
+    span {
+      font-size: 8px;
+    }
   }
 `;
 
