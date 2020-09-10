@@ -31,6 +31,14 @@ export const Container = styled.div`
           height: 3px;
           background-color: #3490ff;
         }
+
+        @media (max-width: 780px) {
+          padding: 0 16px;
+          text-align: center;
+          &:after {
+            display: none;
+          }
+        }
       }
     }
   }
@@ -42,6 +50,9 @@ export const Container = styled.div`
     align-items: flex-start;
     justify-content: center;
     padding: 54px 180px;
+    @media (max-width: 960px) {
+      padding: 54px 20px;
+    }
     p {
       font-size: 16px;
       font-weight: normal;
