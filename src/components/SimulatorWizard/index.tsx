@@ -4,11 +4,11 @@ import {
   FaCalendarAlt,
   FaUsers,
   FaPiggyBank,
-  FaChartLine,
   FaStopwatch,
   FaMoneyCheckAlt,
   FaHandHoldingUsd,
-  FaPercentage
+  FaPercentage,
+  FaBaby
 } from 'react-icons/fa';
 import Slider from 'components/Slider';
 
@@ -18,22 +18,9 @@ import RangeSlider from 'components/RangeSlider';
 import { VaultIcon } from '../../assets/icons';
 import theme from '../../styles/theme';
 import { Container } from './styles';
+import { SimulationData } from '../../hooks/simulation';
 import Sidebar from './Sidebar';
 import Answer from './Answer';
-
-export interface SimulatorData {
-  age?: number;
-  ageRetirement?: number;
-  yearlyFamilyIncome?: number;
-  savingsMonthlyValue?: number;
-  realTaxAfterRetirement?: number;
-  currentInvestments?: number;
-  lifeExpectancy?: number;
-  inssProfits?: number;
-  otherProfits?: number;
-  yearsToWork?: number;
-  isEditing?: boolean;
-}
 
 export interface Item {
   id: number;
@@ -48,8 +35,8 @@ export interface Item {
 }
 
 export interface SimulatorProps {
-  initialData?: SimulatorData;
-  onSubmitData?: (data: SimulatorData) => void;
+  initialData?: SimulationData;
+  onSubmitData?: (data: SimulationData) => void;
 }
 
 const SimulatorWizard: React.FC<SimulatorProps> = ({
@@ -63,7 +50,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
     type: 'currency'
   });
 
-  const [formData, setFormData] = useState<SimulatorData>(initialData || {});
+  const [formData, setFormData] = useState<SimulationData>(initialData || {});
 
   const [resultEnabled, setResultEnabled] = useState(false);
   const [resultLoading, setResultLoading] = useState(false);
@@ -85,7 +72,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
   }, [formData, onSubmitData, initialData.isEditing]);
 
   const handleFormChange = useCallback(
-    (field: keyof SimulatorData, value: number) => {
+    (field: keyof SimulationData, value: number) => {
       setFormData({ ...formData, [field]: value });
     },
     [formData]
@@ -123,10 +110,12 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         value: formData.ageRetirement && `${formData.ageRetirement} anos`,
         filled: !!formData.ageRetirement,
         active: isActive(1),
+        description:
+          'Idade em que pretende não depender mais financeiramente do trabalho.',
         input: (
           <NumberInput
             value={formData.ageRetirement}
-            placeholder="Insira sua idade atual"
+            placeholder="Insira a idade que deseja se aposentar"
             onValueChange={value => handleFormChange('ageRetirement', value)}
           />
         )
@@ -140,7 +129,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         filled: !!formData.lifeExpectancy,
         active: isActive(2),
         description:
-          'Expectativa de vida média brasileira é 75 anos. Aconselhamos colocar no mínimo 10 anos a mais, que é a idade considerada no relatório.',
+          'Expectativa de vida média brasileira é 75 anos. Aconselhamos colocar no mínimo 10 anos a mais, que é a idade considerada no relatório padrão.',
         input: (
           <NumberInput
             value={formData.lifeExpectancy}
@@ -176,9 +165,13 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         type: 'currency',
         filled: !!formData.savingsMonthlyValue,
         active: isActive(4),
+        description:
+          'Valores economizamos mensalmente considerando aplicações financeiras, compra de moeda estrangeira, aportes nas previdências e etc..',
         input: (
           <Slider
             value={formData.savingsMonthlyValue || 5000}
+            maxValue={250000}
+            step={250}
             onSliderChange={value =>
               handleFormChange('savingsMonthlyValue', value)
             }
@@ -193,6 +186,8 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         type: 'currency',
         filled: !!formData.currentInvestments,
         active: isActive(5),
+        description:
+          'Investimentos financeiros atuais como: aplicações, previdências privadas, moeda, contas no exterior, e etc..',
         input: (
           <Slider
             value={formData.currentInvestments || 5000}
@@ -205,17 +200,15 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
       {
         id: 6,
         icon: <FaPercentage color={theme.colors.text} />,
-        title: 'Taxas de juros real após aposentadoria',
-        value: formData.realTaxAfterRetirement,
+        title: 'Perfil do Investidor',
+        value: formData.investorProfile,
         type: 'percentage',
-        filled: !!formData.realTaxAfterRetirement,
+        filled: !!formData.investorProfile,
         active: isActive(6),
         input: (
           <RangeSlider
-            value={formData.realTaxAfterRetirement}
-            onSliderChange={value =>
-              handleFormChange('realTaxAfterRetirement', value)
-            }
+            value={formData.investorProfile}
+            onSliderChange={value => handleFormChange('investorProfile', value)}
           />
         )
       },
@@ -239,7 +232,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
       {
         id: 9,
         icon: <FaHandHoldingUsd color={theme.colors.text} />,
-        title: 'Outras rendas',
+        title: 'Outras rendas mensais após aposentadoria',
         value: formData.otherProfits,
         type: 'currency',
         filled: !!formData.otherProfits,
@@ -250,6 +243,28 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
           <Slider
             value={formData.otherProfits || 5000}
             onSliderChange={value => handleFormChange('otherProfits', value)}
+          />
+        )
+      },
+      {
+        id: 10,
+        icon: <FaBaby color={theme.colors.text} />,
+        title: 'Número de dependentes',
+        value:
+          formData.dependentsNumber &&
+          `${
+            formData.dependentsNumber === 1
+              ? `${formData.dependentsNumber} dependente`
+              : `${formData.dependentsNumber} dependentes`
+          }`,
+        type: 'text',
+        filled: !!formData.dependentsNumber,
+        active: isActive(10),
+        input: (
+          <NumberInput
+            value={formData.dependentsNumber}
+            placeholder="Insira o número de dependentes"
+            onValueChange={value => handleFormChange('dependentsNumber', value)}
           />
         )
       }

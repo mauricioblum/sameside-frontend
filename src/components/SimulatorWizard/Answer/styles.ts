@@ -83,6 +83,18 @@ export const Form = styled.div`
 
   > input {
     margin-top: 42px;
+    min-width: 280px;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    &[type='number'] {
+      -moz-appearance: textfield;
+    }
   }
 `;
 

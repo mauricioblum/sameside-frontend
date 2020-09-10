@@ -1,16 +1,17 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
 
-interface SimulationData {
+export interface SimulationData {
   age?: number;
   ageRetirement?: number;
   yearlyFamilyIncome?: number;
   savingsMonthlyValue?: number;
-  realTaxAfterRetirement?: number;
+  investorProfile?: number;
   currentInvestments?: number;
   lifeExpectancy?: number;
   inssProfits?: number;
   otherProfits?: number;
   yearsToWork?: number;
+  dependentsNumber?: number;
   isEditing?: boolean;
 }
 

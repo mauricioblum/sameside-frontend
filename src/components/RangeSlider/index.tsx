@@ -37,15 +37,15 @@ const RangeSlider: React.FC<SliderProps> = ({
     <IntervalTrackFive />
     <Labels>
       <Label active={value <= 3}>
-        <LabelText>Moderado</LabelText>
+        <LabelText>Conservador</LabelText>
         <LabelValue>2%</LabelValue>
       </Label>
       <Label active={value > 3 && value < 7}>
-        <LabelText>Conservador</LabelText>
+        <LabelText>Conservador CP</LabelText>
         <LabelValue>4%</LabelValue>
       </Label>
       <Label active={value > 6 && value < 11}>
-        <LabelText>Conservador CP</LabelText>
+        <LabelText>Moderado</LabelText>
         <LabelValue>7%</LabelValue>
       </Label>
       <Label active={value > 10 && value < 15}>

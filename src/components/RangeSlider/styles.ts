@@ -15,30 +15,30 @@ export const IntervalTrackOne = styled.div`
   z-index: 3;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  background-color: #ffe527;
+  background-color: #05f043;
 `;
 
 export const IntervalTrackTwo = styled(IntervalTrackOne)`
   left: 20%;
-  background-color: #ffc027;
+  background-color: #f0c505;
   border-radius: 0;
 `;
 
 export const IntervalTrackThree = styled(IntervalTrackOne)`
   left: 40%;
-  background-color: #ffa527;
+  background-color: #f06305;
   border-radius: 0;
 `;
 
 export const IntervalTrackFour = styled(IntervalTrackOne)`
   left: 60%;
-  background-color: #ff7727;
+  background-color: #f03805;
   border-radius: 0;
 `;
 
 export const IntervalTrackFive = styled(IntervalTrackOne)`
   left: 80%;
-  background-color: #f44625;
+  background-color: #f00606;
   border-radius: 0;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
