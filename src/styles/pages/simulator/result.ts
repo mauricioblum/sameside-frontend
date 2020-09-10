@@ -75,8 +75,17 @@ export const Container = styled.div`
       align-items: center;
       justify-content: center;
       width: 100%;
+      padding: 0 25px;
       button:first-child {
         margin-right: 30px;
+      }
+      @media (max-width: 960px) {
+        flex-direction: column;
+        text-align: center;
+        button:first-child {
+          margin-bottom: 10px;
+          margin-right: 0;
+        }
       }
     }
   }

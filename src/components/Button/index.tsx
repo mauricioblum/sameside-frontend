@@ -20,6 +20,9 @@ export const StyledButton = styled.button<{ appearence?: string }>`
   @media (max-width: 460px) {
     width: 339px;
   }
+  @media (max-width: 390px) {
+    width: 300px;
+  }
   @media (max-width: 360px) {
     width: 279px;
   }
