@@ -79,9 +79,8 @@ export const Label = styled.div<{ active?: boolean }>`
   span {
     font-weight: ${props => (props.active ? 'bold' : 'normal ')};
   }
-  @media (max-width: 780px) {
-    h4,
-    span {
+  @media (max-width: 930px) {
+    h4 {
       display: none;
     }
   }
@@ -105,4 +104,22 @@ export const LabelValue = styled.span`
   text-align: center;
   color: ${props => props.theme.colors.text};
   transition: font-weight 0.2s;
+`;
+
+export const MobileLegend = styled.ul`
+  margin-top: 50px;
+  text-align: center;
+  list-style: none;
+  display: none;
+
+  li {
+    font-size: 16px;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+    color: ${props => props.theme.colors.text};
+  }
+
+  @media (max-width: 930px) {
+    display: initial;
+  }
 `;

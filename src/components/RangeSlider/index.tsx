@@ -10,7 +10,8 @@ import {
   Labels,
   Label,
   LabelText,
-  LabelValue
+  LabelValue,
+  MobileLegend
 } from './styles';
 
 export interface SliderProps {
@@ -58,6 +59,13 @@ const RangeSlider: React.FC<SliderProps> = ({
         <LabelText>Agressivo</LabelText>
       </Label>
     </Labels>
+    <MobileLegend>
+      <li>1 - Conservador</li>
+      <li>2 - Conservador CP</li>
+      <li>3 - Moderado</li>
+      <li>4 - Arrojado</li>
+      <li>5 - Agressivo</li>
+    </MobileLegend>
   </IntervalContainer>
 );
 
