@@ -52,7 +52,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
 
   return (
     <StyledInput
-      type="number"
+      type="tel"
       value={value || ''}
       min={1}
       max={150}

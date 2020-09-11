@@ -19,7 +19,7 @@ const customStyles = {
   option: (provided, state) => ({
     ...provided,
     color: state.isSelected ? '#fff' : '#7f8fa4',
-    padding: 20,
+    padding: 10,
     fontSize: 16,
     fontWeight: state.isSelected ? 'bold' : 'normal',
     textAlign: 'center'

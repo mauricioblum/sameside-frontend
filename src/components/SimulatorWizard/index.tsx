@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import {
   FaHourglassHalf,
   FaCalendarAlt,
@@ -308,6 +308,18 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
     () => !sidebarItems.some(item => item.filled === false),
     [sidebarItems]
   );
+
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      console.log(event);
+      if (event.key === 'Enter' || event.key === 'Tab') {
+        setSelectedItem({ id: selectedItem.id + 1 } as Item);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress, false);
+    return () => document.removeEventListener('keydown', handleKeyPress, false);
+  }, [selectedItem.id]);
 
   return (
     <Container>

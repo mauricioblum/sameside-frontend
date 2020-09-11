@@ -89,18 +89,22 @@ export const Form = styled.div`
       font-stretch: normal;
       font-style: normal;
       text-align: center;
-      width: 60%;
+      width: 90%;
       color: ${props => props.theme.colors.text};
       transition: 0.2s box-shadow;
       &:focus {
         box-shadow: 0 0 3pt 1pt #999;
         outline: 0;
       }
+
+      @media (min-width: 500px) {
+        width: 60%;
+      }
     }
   }
 
   > div + div {
-    margin-top: 42px;
+    margin-top: 22px;
   }
 
   > input {
