@@ -47,7 +47,7 @@ export const Form = styled.div`
   flex-direction: column;
   align-items: center;
 
-  svg {
+  > svg {
     width: 57px;
     height: 57px;
     opacity: 0.6;
@@ -77,6 +77,26 @@ export const Form = styled.div`
 
   > div {
     min-height: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    input {
+      border: 0;
+      padding: 15px;
+      font-size: 32px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      text-align: center;
+      width: 60%;
+      color: ${props => props.theme.colors.text};
+      transition: 0.2s box-shadow;
+      &:focus {
+        box-shadow: 0 0 3pt 1pt #999;
+        outline: 0;
+      }
+    }
   }
 
   > div + div {

@@ -13,9 +13,9 @@ export interface SliderProps {
 const StyledInput = styled(InputRange)``;
 
 const Slider: React.FC<SliderProps> = ({
-  value = 5000,
-  maxValue = 100000,
-  minValue = 5000,
+  value = 0,
+  maxValue = 500000,
+  minValue = 0,
   step = 500,
   onSliderChange
 }) => (
@@ -25,6 +25,7 @@ const Slider: React.FC<SliderProps> = ({
     value={value}
     step={step}
     onChange={onSliderChange}
+    draggableTrack={false}
   />
 );
 

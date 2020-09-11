@@ -8,21 +8,37 @@ export interface AnswerProps {
   item?: Item;
   completed?: boolean;
   onClickViewResult?(): void;
+  onEditInputValue?(item: Item, value: number): void;
   isEditing?: boolean;
 }
 
-const renderValue = (item: Item) => {
+const renderValue = (
+  item: Item,
+  onEditInputValue: (item: Item, value: number) => void
+) => {
   switch (item.type) {
     case 'currency':
       return (
         <NumberFormat
           value={item.value}
-          displayType="text"
+          key={item.itemCategory}
+          displayType="input"
           thousandSeparator="."
           decimalSeparator=","
-          renderText={number => <h2>R$ {number}</h2>}
+          prefix="R$ "
           decimalScale={2}
           fixedDecimalScale
+          allowNegative={false}
+          type="tel"
+          onValueChange={values => {
+            const currentValue = Number(values.value);
+            const maxValue = item.maxValue || 500000;
+            if (onEditInputValue && currentValue <= maxValue) {
+              onEditInputValue(item, Number(values.value));
+            } else if (onEditInputValue) {
+              onEditInputValue(item, maxValue);
+            }
+          }}
         />
       );
     case 'percentage':
@@ -38,7 +54,8 @@ const Answer: React.FC<AnswerProps> = ({
   item,
   completed,
   onClickViewResult,
-  isEditing
+  isEditing,
+  onEditInputValue
 }) => {
   if (!item) {
     return null;
@@ -49,7 +66,7 @@ const Answer: React.FC<AnswerProps> = ({
       <EditContainer>
         <Form>
           <p>{item.title}</p>
-          <div>{Boolean(item.value) && renderValue(item)}</div>
+          <div>{renderValue(item, onEditInputValue)}</div>
           {item.input}
         </Form>
       </EditContainer>
@@ -61,7 +78,7 @@ const Answer: React.FC<AnswerProps> = ({
       <Form>
         {item.icon}
         <p>{item.title}</p>
-        <div>{Boolean(item.value) && renderValue(item)}</div>
+        <div>{renderValue(item, onEditInputValue)}</div>
         {item.input}
       </Form>
       {item.description && (

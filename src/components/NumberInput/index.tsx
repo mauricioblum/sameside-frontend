@@ -20,6 +20,7 @@ const StyledInput = styled.input`
   font-weight: bold;
   letter-spacing: -0.5px;
   text-align: center;
+  border-radius: 4px;
   color: ${props => props.theme.colors.text};
   &::placeholder {
     font-size: 14px;

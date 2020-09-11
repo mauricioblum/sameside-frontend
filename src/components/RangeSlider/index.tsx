@@ -20,7 +20,7 @@ export interface SliderProps {
 }
 const RangeSlider: React.FC<SliderProps> = ({
   value = 0,
-  maxValue = 18,
+  maxValue = 20,
   onSliderChange
 }) => (
   <IntervalContainer>
@@ -29,6 +29,7 @@ const RangeSlider: React.FC<SliderProps> = ({
       maxValue={maxValue}
       onChange={onSliderChange}
       step={1}
+      draggableTrack={false}
     />
     <IntervalTrackOne />
     <IntervalTrackTwo />
@@ -37,24 +38,24 @@ const RangeSlider: React.FC<SliderProps> = ({
     <IntervalTrackFive />
     <Labels>
       <Label active={value <= 3}>
+        <LabelValue>1</LabelValue>
         <LabelText>Conservador</LabelText>
-        <LabelValue>2%</LabelValue>
       </Label>
       <Label active={value > 3 && value < 7}>
+        <LabelValue>2</LabelValue>
         <LabelText>Conservador CP</LabelText>
-        <LabelValue>4%</LabelValue>
       </Label>
       <Label active={value > 6 && value < 11}>
+        <LabelValue>3</LabelValue>
         <LabelText>Moderado</LabelText>
-        <LabelValue>7%</LabelValue>
       </Label>
       <Label active={value > 10 && value < 15}>
+        <LabelValue>4</LabelValue>
         <LabelText>Arrojado</LabelText>
-        <LabelValue>11%</LabelValue>
       </Label>
       <Label active={value > 14}>
+        <LabelValue>5</LabelValue>
         <LabelText>Agressivo</LabelText>
-        <LabelValue>17%</LabelValue>
       </Label>
     </Labels>
   </IntervalContainer>

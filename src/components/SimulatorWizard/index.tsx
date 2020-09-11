@@ -15,6 +15,7 @@ import Slider from 'components/Slider';
 import NumberInput from 'components/NumberInput';
 import Result from 'components/Result';
 import RangeSlider from 'components/RangeSlider';
+import AgeSelect from 'components/AgeSelect';
 import { VaultIcon } from '../../assets/icons';
 import theme from '../../styles/theme';
 import { Container } from './styles';
@@ -27,7 +28,9 @@ export interface Item {
   icon: JSX.Element;
   title: string;
   type: 'currency' | 'text' | 'percentage';
+  itemCategory: keyof SimulationData;
   value?: string | number;
+  maxValue?: number;
   filled?: boolean;
   active?: boolean;
   input?: JSX.Element;
@@ -47,7 +50,8 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
     id: 0,
     icon: <></>,
     title: '',
-    type: 'currency'
+    type: 'currency',
+    itemCategory: 'age'
   });
 
   const [formData, setFormData] = useState<SimulationData>(initialData || {});
@@ -83,6 +87,12 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
     [selectedItem]
   );
 
+  const handleOnBlurItem = (field: string | number, id: number) => {
+    if (field) {
+      setSelectedItem({ id: id + 1 } as Item);
+    }
+  };
+
   const sidebarItems: Item[] = useMemo(
     () => [
       {
@@ -90,15 +100,16 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         icon: <FaHourglassHalf color={theme.colors.text} />,
         title: 'Idade atual',
         type: 'text',
+        itemCategory: 'age',
         value: formData.age && `${formData.age} anos`,
         filled: !!formData.age,
         active: isActive(0),
         input: (
-          <NumberInput
+          <AgeSelect
+            identifier="select-age"
             value={formData.age}
-            placeholder="Insira sua idade atual"
-            onValueChange={value => handleFormChange('age', value)}
-            onBlur={() => initialData.isEditing && fakeApiCall()}
+            onSelectValue={value => handleFormChange('age', value)}
+            placeholder="Selecione a idade atual..."
           />
         )
       },
@@ -107,16 +118,18 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         icon: <FaCalendarAlt color={theme.colors.text} />,
         title: 'Idade da aposentadoria',
         type: 'text',
+        itemCategory: 'ageRetirement',
         value: formData.ageRetirement && `${formData.ageRetirement} anos`,
         filled: !!formData.ageRetirement,
         active: isActive(1),
         description:
           'Idade em que pretende não depender mais financeiramente do trabalho.',
         input: (
-          <NumberInput
+          <AgeSelect
+            identifier="select-ageRetirement"
             value={formData.ageRetirement}
-            placeholder="Insira a idade que deseja se aposentar"
-            onValueChange={value => handleFormChange('ageRetirement', value)}
+            onSelectValue={value => handleFormChange('ageRetirement', value)}
+            placeholder="Selecione a idade que deseja se aposentar"
           />
         )
       },
@@ -126,15 +139,17 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         title: 'Expectativa de Vida',
         value: formData.lifeExpectancy && `${formData.lifeExpectancy} anos`,
         type: 'text',
+        itemCategory: 'lifeExpectancy',
         filled: !!formData.lifeExpectancy,
         active: isActive(2),
         description:
           'Expectativa de vida média brasileira é 75 anos. Aconselhamos colocar no mínimo 10 anos a mais, que é a idade considerada no relatório padrão.',
         input: (
-          <NumberInput
+          <AgeSelect
+            identifier="select-lifeExpectancy"
             value={formData.lifeExpectancy}
-            placeholder="Insira a expectativa de vida"
-            onValueChange={value => handleFormChange('lifeExpectancy', value)}
+            onSelectValue={value => handleFormChange('lifeExpectancy', value)}
+            placeholder="Selecione a expectativa de vida..."
           />
         )
       },
@@ -143,6 +158,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         icon: <FaUsers color={theme.colors.text} />,
         title: 'Renda familiar mensal',
         type: 'currency',
+        itemCategory: 'yearlyFamilyIncome',
         value: formData.yearlyFamilyIncome,
         filled: !!formData.yearlyFamilyIncome,
         active: isActive(3),
@@ -163,6 +179,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         title: 'Valor economizado mensal',
         value: formData.savingsMonthlyValue,
         type: 'currency',
+        itemCategory: 'savingsMonthlyValue',
         filled: !!formData.savingsMonthlyValue,
         active: isActive(4),
         description:
@@ -170,8 +187,6 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         input: (
           <Slider
             value={formData.savingsMonthlyValue || 5000}
-            maxValue={250000}
-            step={250}
             onSliderChange={value =>
               handleFormChange('savingsMonthlyValue', value)
             }
@@ -183,7 +198,9 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         icon: <VaultIcon color={theme.colors.text} />,
         title: 'Investimentos financeiros atuais',
         value: formData.currentInvestments,
+        maxValue: 10000000,
         type: 'currency',
+        itemCategory: 'currentInvestments',
         filled: !!formData.currentInvestments,
         active: isActive(5),
         description:
@@ -191,6 +208,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         input: (
           <Slider
             value={formData.currentInvestments || 5000}
+            maxValue={10000000}
             onSliderChange={value =>
               handleFormChange('currentInvestments', value)
             }
@@ -203,6 +221,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         title: 'Perfil do Investidor',
         value: formData.investorProfile,
         type: 'percentage',
+        itemCategory: 'investorProfile',
         filled: !!formData.investorProfile,
         active: isActive(6),
         input: (
@@ -218,6 +237,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         title: 'Renda do INSS e outros regimes de previdência público',
         value: formData.inssProfits,
         type: 'currency',
+        itemCategory: 'inssProfits',
         filled: !!formData.inssProfits,
         active: isActive(8),
         description:
@@ -235,6 +255,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         title: 'Outras rendas mensais após aposentadoria',
         value: formData.otherProfits,
         type: 'currency',
+        itemCategory: 'otherProfits',
         filled: !!formData.otherProfits,
         active: isActive(9),
         description:
@@ -258,6 +279,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
               : `${formData.dependentsNumber} dependentes`
           }`,
         type: 'text',
+        itemCategory: 'dependentsNumber',
         filled: !!formData.dependentsNumber,
         active: isActive(10),
         input: (
@@ -269,7 +291,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         )
       }
     ],
-    [formData, handleFormChange, isActive, initialData.isEditing, fakeApiCall]
+    [formData, handleFormChange, isActive]
   );
 
   const handleClickItem = useCallback((item: Item) => {
@@ -306,6 +328,9 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
             isEditing
             item={activeItem}
             completed={isAllFieldsFilled}
+            onEditInputValue={(item, value) =>
+              handleFormChange(item.itemCategory, value)
+            }
             onClickViewResult={() => {
               fakeApiCall();
             }}
@@ -315,6 +340,9 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         <Answer
           item={activeItem}
           completed={isAllFieldsFilled}
+          onEditInputValue={(item, value) =>
+            handleFormChange(item.itemCategory, value)
+          }
           onClickViewResult={() => {
             fakeApiCall();
           }}

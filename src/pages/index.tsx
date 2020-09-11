@@ -39,7 +39,9 @@ const SimulatorHome: React.FC = () => {
 
         <div>
           <Link href="/simulator" passHref>
-            <Button onClick={clearData}>Iniciar Simulação</Button>
+            <a href="/simulator">
+              <Button onClick={clearData}>Iniciar Simulação</Button>
+            </a>
           </Link>
         </div>
       </main>

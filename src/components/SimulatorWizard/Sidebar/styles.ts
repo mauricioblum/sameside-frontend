@@ -41,7 +41,7 @@ export const SidebarItem = styled.div<{ active?: boolean; hasValue?: boolean }>`
         font-style: normal;
         letter-spacing: -0.5px;
         line-height: 1;
-        max-width: 320px;
+        max-width: 310px;
         opacity: ${props => (props.hasValue ? 1 : 0.42)};
         color: ${props => props.theme.colors.text};
       }

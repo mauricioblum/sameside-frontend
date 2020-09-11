@@ -35,19 +35,19 @@ export const IntervalTrackTwo = styled(IntervalTrackOne)`
 
 export const IntervalTrackThree = styled(IntervalTrackOne)`
   left: 40%;
-  background-color: #f06305;
+  background-color: #ff9000;
   border-radius: 0;
 `;
 
 export const IntervalTrackFour = styled(IntervalTrackOne)`
   left: 60%;
-  background-color: #f03805;
+  background-color: #f04805;
   border-radius: 0;
 `;
 
 export const IntervalTrackFive = styled(IntervalTrackOne)`
   left: 80%;
-  background-color: #f00606;
+  background-color: #cc0000;
   border-radius: 0;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -57,7 +57,7 @@ export const StyledInput = styled(InputRange)``;
 
 export const Labels = styled.div`
   position: relative;
-  margin-top: 23px;
+  margin-top: 15px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -99,9 +99,8 @@ export const LabelText = styled.h4`
 
 export const LabelValue = styled.span`
   display: block;
-  font-size: 16px;
-  font-stretch: normal;
-  font-style: normal;
+  font-size: 20px;
+  font-weight: bold;
   letter-spacing: -0.5px;
   text-align: center;
   color: ${props => props.theme.colors.text};
