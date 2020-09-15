@@ -114,6 +114,11 @@ const Answer: React.FC<AnswerProps> = ({
           <p>{item.description}</p>
         </div>
       )}
+      {item.hasError && item.validationMessage && (
+        <div className="error">
+          <p>{item.validationMessage}</p>
+        </div>
+      )}
       {completed && <Button onClick={onClickViewResult}>Ver resultado</Button>}
     </Container>
   );

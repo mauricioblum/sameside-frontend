@@ -19,6 +19,15 @@ export const Container = styled.div`
     padding: 0 48px;
   }
 
+  div.error {
+    p {
+      margin-top: 20px;
+      color: ${props => props.theme.colors.backgroundError};
+      font-weight: bold;
+      font-size: 18px;
+    }
+  }
+
   button {
     margin-top: 42px;
     margin-bottom: 42px;

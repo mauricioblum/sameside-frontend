@@ -43,6 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ items, onClickItem }) => (
         onClick={() => onClickItem(item)}
         active={item.active}
         hasValue={validValue(item.value)}
+        hasError={item.hasError}
       >
         <div>
           {item.icon}
@@ -51,7 +52,9 @@ const Sidebar: React.FC<SidebarProps> = ({ items, onClickItem }) => (
             {validValue(item.value) && renderValue(item)}
           </div>
         </div>
-        {item.filled && <FaCheck color="#2b90f7" width={24} />}
+        {!item.hasError && item.filled && (
+          <FaCheck color="#2b90f7" width={24} />
+        )}
       </SidebarItem>
     ))}
   </Container>

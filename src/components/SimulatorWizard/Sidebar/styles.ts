@@ -1,4 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+interface SidebarStyledProps {
+  active?: boolean;
+  hasValue?: boolean;
+  hasError?: boolean;
+}
 
 export const Container = styled.div`
   display: flex;
@@ -8,7 +14,7 @@ export const Container = styled.div`
   border-right: solid 1px #e6eaee;
 `;
 
-export const SidebarItem = styled.div<{ active?: boolean; hasValue?: boolean }>`
+export const SidebarItem = styled.div<SidebarStyledProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,12 +29,19 @@ export const SidebarItem = styled.div<{ active?: boolean; hasValue?: boolean }>`
     width: 24px;
   }
 
+  ${props =>
+    props.hasError &&
+    css`
+      background: ${props.theme.colors.backgroundError};
+    `}
+
   > div {
     display: flex;
     align-items: ${props => (props.hasValue ? 'flex-start' : 'center')};
     padding: 8px 0 8px 0;
     svg {
       opacity: ${props => (props.hasValue ? 1 : 0.42)};
+      fill: ${props => (props.hasError ? '#fff' : props.theme.colors.text)};
     }
     div.info {
       display: flex;
@@ -43,7 +56,7 @@ export const SidebarItem = styled.div<{ active?: boolean; hasValue?: boolean }>`
         line-height: 1;
         max-width: 310px;
         opacity: ${props => (props.hasValue ? 1 : 0.42)};
-        color: ${props => props.theme.colors.text};
+        color: ${props => (props.hasError ? '#fff' : props.theme.colors.text)};
       }
       span {
         font-size: 15px;
@@ -52,7 +65,7 @@ export const SidebarItem = styled.div<{ active?: boolean; hasValue?: boolean }>`
         font-stretch: normal;
         font-style: normal;
         letter-spacing: -0.5px;
-        color: ${props => props.theme.colors.text};
+        color: ${props => (props.hasError ? '#fff' : props.theme.colors.text)};
       }
     }
   }

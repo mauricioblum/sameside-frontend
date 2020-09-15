@@ -23,18 +23,22 @@ import { SimulationData } from '../../hooks/simulation';
 import Sidebar from './Sidebar';
 import Answer from './Answer';
 
+export type ItemCategory = keyof SimulationData;
+
 export interface Item {
   id: number;
   icon: JSX.Element;
   title: string;
   type: 'currency' | 'text' | 'percentage';
-  itemCategory: keyof SimulationData;
+  itemCategory: ItemCategory;
   value?: string | number;
   maxValue?: number;
   filled?: boolean;
   active?: boolean;
   input?: JSX.Element;
   description?: string;
+  hasError?: boolean;
+  validationMessage?: string;
 }
 
 export interface SimulatorProps {
@@ -58,6 +62,12 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
 
   const [resultEnabled, setResultEnabled] = useState(false);
   const [resultLoading, setResultLoading] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<string[]>([]);
+
+  const checkIfFieldHasError = useCallback(
+    (field: ItemCategory) => fieldErrors.some(err => err.includes(field)),
+    [fieldErrors]
+  );
 
   const fakeLoadingMethod = () =>
     new Promise((resolve, reject) => {
@@ -76,7 +86,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
   }, [formData, onSubmitData, initialData.isEditing]);
 
   const handleFormChange = useCallback(
-    (field: keyof SimulationData, value: number) => {
+    (field: ItemCategory, value: number) => {
       if (field === 'investorProfile') {
         if (value % 1 === 0 && value < 4.5) {
           setFormData({ ...formData, investorProfile: value + 0.5 });
@@ -150,6 +160,9 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         value: formData.ageRetirement && `${formData.ageRetirement} anos`,
         filled: isFilled(formData.ageRetirement),
         active: isActive(1),
+        hasError: checkIfFieldHasError('ageRetirement'),
+        validationMessage:
+          'Idade da aposentadoria não pode ser menor que a idade atual!',
         description:
           'Idade em que pretende não depender mais financeiramente do trabalho.',
         input: (
@@ -238,14 +251,6 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         description:
           'Investimentos financeiros atuais como: aplicações, previdências privadas, moeda, contas no exterior, e etc..',
         input: (
-          // <Slider
-          //   value={formData.currentInvestments || 5000}
-          //   maxValue={10000000}
-          //   step={100}
-          //   onSliderChange={value =>
-          //     handleFormChange('currentInvestments', value)
-          //   }
-          // />
           <InputGroupButtons
             onClickInput={value =>
               handleFormChange(
@@ -370,12 +375,36 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         )
       }
     ],
-    [formData, handleFormChange, isActive, isFilled, getInvestorProfile]
+    [
+      formData,
+      handleFormChange,
+      isActive,
+      isFilled,
+      getInvestorProfile,
+      checkIfFieldHasError
+    ]
   );
+  const validateInputs = useCallback(() => {
+    if (
+      selectedItem.itemCategory === 'ageRetirement' &&
+      formData.ageRetirement <= formData.age
+    ) {
+      setFieldErrors(['ageRetirement']);
+      return false;
+    }
+    setFieldErrors([]);
+    setSelectedItem({ id: selectedItem.id + 1 } as Item);
+    return true;
+  }, [selectedItem, formData]);
 
-  const handleClickItem = useCallback((item: Item) => {
-    setSelectedItem(item);
-  }, []);
+  const handleClickItem = useCallback(
+    (item: Item) => {
+      if (validateInputs()) {
+        setSelectedItem(item);
+      }
+    },
+    [validateInputs]
+  );
 
   const activeItem = useMemo(
     () =>
@@ -387,17 +416,16 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
     () => !sidebarItems.some(item => item.filled === false),
     [sidebarItems]
   );
-
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key === 'Enter' || event.key === 'Tab') {
-        setSelectedItem({ id: selectedItem.id + 1 } as Item);
+        validateInputs();
       }
     };
 
     document.addEventListener('keydown', handleKeyPress, false);
     return () => document.removeEventListener('keydown', handleKeyPress, false);
-  }, [selectedItem.id]);
+  }, [selectedItem.id, validateInputs]);
 
   return (
     <Container>
