@@ -21,7 +21,7 @@ export interface SliderProps {
   onLabelClick?(value: number): void;
 }
 const RangeSlider: React.FC<SliderProps> = ({
-  value = 0.5,
+  value = 0,
   maxValue = 5,
   onSliderChange,
   onLabelClick

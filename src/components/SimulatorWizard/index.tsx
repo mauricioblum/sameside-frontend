@@ -15,6 +15,7 @@ import Slider from 'components/Slider';
 import Result from 'components/Result';
 import RangeSlider from 'components/RangeSlider';
 import OptionSelect from 'components/OptionSelect';
+import InputGroupButtons from 'components/InputGroupButtons';
 import { VaultIcon } from '../../assets/icons';
 import theme from '../../styles/theme';
 import { Container } from './styles';
@@ -77,8 +78,10 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
   const handleFormChange = useCallback(
     (field: keyof SimulationData, value: number) => {
       if (field === 'investorProfile') {
-        if (value % 1 === 0) {
+        if (value % 1 === 0 && value < 4.5) {
           setFormData({ ...formData, investorProfile: value + 0.5 });
+        } else if (value > 4.5) {
+          setFormData({ ...formData, investorProfile: 4.5 });
         } else {
           setFormData({ ...formData, investorProfile: value });
         }
@@ -112,7 +115,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
       case 4.5:
         return 'Agressivo';
       default:
-        return 'Conservador';
+        return null;
     }
   }, []);
 
@@ -235,12 +238,55 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         description:
           'Investimentos financeiros atuais como: aplicações, previdências privadas, moeda, contas no exterior, e etc..',
         input: (
-          <Slider
-            value={formData.currentInvestments || 5000}
-            maxValue={10000000}
-            onSliderChange={value =>
-              handleFormChange('currentInvestments', value)
+          // <Slider
+          //   value={formData.currentInvestments || 5000}
+          //   maxValue={10000000}
+          //   step={100}
+          //   onSliderChange={value =>
+          //     handleFormChange('currentInvestments', value)
+          //   }
+          // />
+          <InputGroupButtons
+            onClickInput={value =>
+              handleFormChange(
+                'currentInvestments',
+                formData.currentInvestments
+                  ? formData.currentInvestments + value
+                  : value
+              )
             }
+            buttons={[
+              {
+                id: 0,
+                value: 500,
+                label: 'R$ 500,00'
+              },
+              {
+                id: 1,
+                value: 1000,
+                label: 'R$ 1 mil'
+              },
+              {
+                id: 2,
+                value: 10000,
+                label: 'R$ 10 mil'
+              },
+              {
+                id: 3,
+                value: 50000,
+                label: 'R$ 50 mil'
+              },
+              {
+                id: 4,
+                value: 100000,
+                label: 'R$ 100 mil'
+              },
+              {
+                id: 5,
+                value: 1000000,
+                label: 'R$ 1 milhão'
+              }
+            ]}
           />
         )
       },

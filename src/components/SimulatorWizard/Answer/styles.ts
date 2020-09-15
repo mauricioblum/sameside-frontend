@@ -100,6 +100,13 @@ export const Form = styled.div`
       @media (min-width: 500px) {
         width: 60%;
       }
+
+      @media (max-width: 390px) {
+        font-size: 26px;
+      }
+      @media (max-width: 340px) {
+        font-size: 23px;
+      }
     }
   }
 
@@ -126,4 +133,16 @@ export const Form = styled.div`
 
 export const EditContainer = styled(Container)`
   padding-top: 0;
+`;
+
+export const CurrencyInputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    all: unset;
+    cursor: pointer;
+    margin-left: 5px;
+  }
 `;
