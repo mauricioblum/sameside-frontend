@@ -52,11 +52,6 @@ const Report: React.FC = () => {
             <InfoBlock>
               <Subtitle>Investimentos Internacional</Subtitle>
               <p>
-                • Abrir conta conjunta Paulo e Marlova (quando Pedro for para
-                exterior incluir como co titular), para reserva de viagens em
-                torno de USD XX mil
-              </p>
-              <p>
                 • Manter em torno de XX% do patrimônio financeiro alocado no
                 exterior via Keep Calm para finalidade de proteção patrimonial e
                 formar poupança adicional na Keep Calm para auxilio nos estudos
@@ -67,10 +62,9 @@ const Report: React.FC = () => {
               </p>
               <p>• Revisar custos de manutenção anual da Keep Calm</p>
               <p>
-                • Abrir contas e investimentos da PF e da Keep Calm em banco de
-                primeira linha (Morgan Stanley), resgatando valores da Investors
-                Trust (verificar se manter saldo minimo de XX mil USD reduz os
-                custos de resgate
+                • Abrir contas e investimentos da XX e da XX em banco de
+                primeira linha (XX), resgatando valores da XX (verificar se
+                manter saldo minimo de XX mil USD reduz os custos de resgate
               </p>
             </InfoBlock>
 
