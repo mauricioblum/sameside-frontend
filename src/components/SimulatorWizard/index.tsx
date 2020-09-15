@@ -12,10 +12,9 @@ import {
 } from 'react-icons/fa';
 import Slider from 'components/Slider';
 
-import NumberInput from 'components/NumberInput';
 import Result from 'components/Result';
 import RangeSlider from 'components/RangeSlider';
-import AgeSelect from 'components/AgeSelect';
+import OptionSelect from 'components/OptionSelect';
 import { VaultIcon } from '../../assets/icons';
 import theme from '../../styles/theme';
 import { Container } from './styles';
@@ -129,9 +128,11 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         filled: isFilled(formData.age),
         active: isActive(0),
         input: (
-          <AgeSelect
+          <OptionSelect
             identifier="select-age"
             value={formData.age}
+            maxNumberOfOptions={110}
+            optionLabels={['anos', 'ano']}
             onSelectValue={value => handleFormChange('age', value)}
             placeholder="Selecione a idade atual..."
           />
@@ -149,9 +150,11 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         description:
           'Idade em que pretende não depender mais financeiramente do trabalho.',
         input: (
-          <AgeSelect
+          <OptionSelect
             identifier="select-ageRetirement"
             value={formData.ageRetirement}
+            maxNumberOfOptions={110}
+            optionLabels={['anos', 'ano']}
             onSelectValue={value => handleFormChange('ageRetirement', value)}
             placeholder="Selecione a idade que deseja se aposentar"
           />
@@ -169,9 +172,11 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         description:
           'Expectativa de vida média brasileira é 75 anos. Aconselhamos colocar no mínimo 10 anos a mais, que é a idade considerada no relatório padrão.',
         input: (
-          <AgeSelect
+          <OptionSelect
             identifier="select-lifeExpectancy"
             value={formData.lifeExpectancy}
+            maxNumberOfOptions={110}
+            optionLabels={['anos', 'ano']}
             onSelectValue={value => handleFormChange('lifeExpectancy', value)}
             placeholder="Selecione a expectativa de vida..."
           />
@@ -308,10 +313,13 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         filled: isFilled(formData.dependentsNumber),
         active: isActive(10),
         input: (
-          <NumberInput
+          <OptionSelect
+            identifier="select-dependents"
             value={formData.dependentsNumber}
+            maxNumberOfOptions={20}
+            optionLabels={['dependentes', 'dependente']}
             placeholder="Insira o número de dependentes"
-            onValueChange={value => handleFormChange('dependentsNumber', value)}
+            onSelectValue={value => handleFormChange('dependentsNumber', value)}
           />
         )
       }
@@ -336,7 +344,6 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      console.log(event);
       if (event.key === 'Enter' || event.key === 'Tab') {
         setSelectedItem({ id: selectedItem.id + 1 } as Item);
       }

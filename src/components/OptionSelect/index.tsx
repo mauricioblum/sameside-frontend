@@ -3,16 +3,21 @@ import Select from 'react-select';
 
 import { Container } from './styles';
 
-interface AgeOptions {
+interface Options {
   value: number;
   label: string;
 }
 
-export interface AgeSelectProps {
+type OptionLabels = [string, string];
+
+export interface OptionSelectProps {
   identifier: string;
   value?: number;
   onSelectValue?(value: number): void;
   placeholder?: string;
+  maxNumberOfOptions: number;
+  /** Array with ["plural-option", "single option"] */
+  optionLabels: OptionLabels;
 }
 
 const customStyles = {
@@ -49,25 +54,27 @@ const customStyles = {
   })
 };
 
-const mapAgeValues = () => {
-  const ageOptions: AgeOptions[] = [];
-  for (let i = 1; i <= 110; i += 1) {
-    const option = {
-      value: i,
-      label: i !== 1 ? `${i} anos` : `${i} ano`
-    };
-    ageOptions.push(option);
-  }
-  return ageOptions;
-};
-
-const AgeSelect: React.FC<AgeSelectProps> = ({
+const OptionSelect: React.FC<OptionSelectProps> = ({
   onSelectValue,
   placeholder,
   value,
-  identifier
+  identifier,
+  maxNumberOfOptions,
+  optionLabels
 }) => {
-  const options = mapAgeValues();
+  const mapOptionValues = () => {
+    const options: Options[] = [];
+    for (let i = 1; i <= maxNumberOfOptions; i += 1) {
+      const option = {
+        value: i,
+        label: i !== 1 ? `${i} ${optionLabels[0]}` : `${i} ${optionLabels[1]}`
+      };
+      options.push(option);
+    }
+    return options;
+  };
+
+  const options = mapOptionValues();
 
   const selectedValue = useMemo(
     () => options.find(option => option.value === value),
@@ -99,4 +106,4 @@ const AgeSelect: React.FC<AgeSelectProps> = ({
   );
 };
 
-export default AgeSelect;
+export default OptionSelect;
