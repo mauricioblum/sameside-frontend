@@ -32,6 +32,9 @@ const renderValue = (item: Item) => {
   }
 };
 
+const validValue = (field: number | string) =>
+  field !== '' && field !== undefined && field !== null;
+
 const Sidebar: React.FC<SidebarProps> = ({ items, onClickItem }) => (
   <Container>
     {items.map(item => (
@@ -39,13 +42,13 @@ const Sidebar: React.FC<SidebarProps> = ({ items, onClickItem }) => (
         key={item.id}
         onClick={() => onClickItem(item)}
         active={item.active}
-        hasValue={!!item.value}
+        hasValue={validValue(item.value)}
       >
         <div>
           {item.icon}
           <div className="info">
             <p>{item.title}</p>
-            {Boolean(item.value) && renderValue(item)}
+            {validValue(item.value) && renderValue(item)}
           </div>
         </div>
         {item.filled && <FaCheck color="#2b90f7" width={24} />}

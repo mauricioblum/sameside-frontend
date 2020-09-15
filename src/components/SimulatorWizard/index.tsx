@@ -87,6 +87,11 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
     [selectedItem]
   );
 
+  const isFilled = useCallback(
+    (field: number) => field !== undefined && field !== null,
+    []
+  );
+
   const handleOnBlurItem = (field: string | number, id: number) => {
     if (field) {
       setSelectedItem({ id: id + 1 } as Item);
@@ -102,7 +107,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         type: 'text',
         itemCategory: 'age',
         value: formData.age && `${formData.age} anos`,
-        filled: !!formData.age,
+        filled: isFilled(formData.age),
         active: isActive(0),
         input: (
           <AgeSelect
@@ -120,7 +125,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         type: 'text',
         itemCategory: 'ageRetirement',
         value: formData.ageRetirement && `${formData.ageRetirement} anos`,
-        filled: !!formData.ageRetirement,
+        filled: isFilled(formData.ageRetirement),
         active: isActive(1),
         description:
           'Idade em que pretende não depender mais financeiramente do trabalho.',
@@ -140,7 +145,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         value: formData.lifeExpectancy && `${formData.lifeExpectancy} anos`,
         type: 'text',
         itemCategory: 'lifeExpectancy',
-        filled: !!formData.lifeExpectancy,
+        filled: isFilled(formData.lifeExpectancy),
         active: isActive(2),
         description:
           'Expectativa de vida média brasileira é 75 anos. Aconselhamos colocar no mínimo 10 anos a mais, que é a idade considerada no relatório padrão.',
@@ -160,7 +165,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         type: 'currency',
         itemCategory: 'yearlyFamilyIncome',
         value: formData.yearlyFamilyIncome,
-        filled: !!formData.yearlyFamilyIncome,
+        filled: isFilled(formData.yearlyFamilyIncome),
         active: isActive(3),
         input: (
           <Slider
@@ -180,7 +185,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         value: formData.savingsMonthlyValue,
         type: 'currency',
         itemCategory: 'savingsMonthlyValue',
-        filled: !!formData.savingsMonthlyValue,
+        filled: isFilled(formData.savingsMonthlyValue),
         active: isActive(4),
         description:
           'Valores economizamos mensalmente considerando aplicações financeiras, compra de moeda estrangeira, aportes nas previdências e etc..',
@@ -201,7 +206,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         maxValue: 10000000,
         type: 'currency',
         itemCategory: 'currentInvestments',
-        filled: !!formData.currentInvestments,
+        filled: isFilled(formData.currentInvestments),
         active: isActive(5),
         description:
           'Investimentos financeiros atuais como: aplicações, previdências privadas, moeda, contas no exterior, e etc..',
@@ -222,7 +227,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         value: formData.investorProfile,
         type: 'percentage',
         itemCategory: 'investorProfile',
-        filled: !!formData.investorProfile,
+        filled: isFilled(formData.investorProfile),
         active: isActive(6),
         input: (
           <RangeSlider
@@ -238,7 +243,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         value: formData.inssProfits,
         type: 'currency',
         itemCategory: 'inssProfits',
-        filled: !!formData.inssProfits,
+        filled: isFilled(formData.inssProfits),
         active: isActive(8),
         description:
           'Previsão de INSS valores atuais, valores esperados de outras previdências do setor público.',
@@ -256,7 +261,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         value: formData.otherProfits,
         type: 'currency',
         itemCategory: 'otherProfits',
-        filled: !!formData.otherProfits,
+        filled: isFilled(formData.otherProfits),
         active: isActive(9),
         description:
           'Considerar aqui outras rendas após aposentadoria, aluguéis, trabalho, pensões, e etc..',
@@ -280,7 +285,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
           }`,
         type: 'text',
         itemCategory: 'dependentsNumber',
-        filled: !!formData.dependentsNumber,
+        filled: isFilled(formData.dependentsNumber),
         active: isActive(10),
         input: (
           <NumberInput
@@ -291,7 +296,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         )
       }
     ],
-    [formData, handleFormChange, isActive]
+    [formData, handleFormChange, isActive, isFilled]
   );
 
   const handleClickItem = useCallback((item: Item) => {
