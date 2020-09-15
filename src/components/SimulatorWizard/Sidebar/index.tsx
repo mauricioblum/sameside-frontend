@@ -24,7 +24,7 @@ const renderValue = (item: Item) => {
         />
       );
     case 'percentage':
-      return <span>{item.value} %</span>;
+      return <span>{item.value}</span>;
     case 'text':
       return <span>{item.value}</span>;
     default:

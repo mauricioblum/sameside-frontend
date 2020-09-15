@@ -70,6 +70,15 @@ export const Label = styled.div<{ active?: boolean }>`
   align-items: center;
   justify-content: center;
   width: 20%;
+  margin-left: 4px;
+  cursor: pointer;
+
+  &:hover {
+    h4,
+    span {
+      filter: contrast(140%);
+    }
+  }
 
   h4 {
     font-weight: ${props => (props.active ? 'bold' : 'normal ')};

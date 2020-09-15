@@ -77,7 +77,15 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
 
   const handleFormChange = useCallback(
     (field: keyof SimulationData, value: number) => {
-      setFormData({ ...formData, [field]: value });
+      if (field === 'investorProfile') {
+        if (value % 1 === 0) {
+          setFormData({ ...formData, investorProfile: value + 0.5 });
+        } else {
+          setFormData({ ...formData, investorProfile: value });
+        }
+      } else {
+        setFormData({ ...formData, [field]: value });
+      }
     },
     [formData]
   );
@@ -92,11 +100,22 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
     []
   );
 
-  const handleOnBlurItem = (field: string | number, id: number) => {
-    if (field) {
-      setSelectedItem({ id: id + 1 } as Item);
+  const getInvestorProfile = useCallback((value: number) => {
+    switch (value) {
+      case 0.5:
+        return 'Conservador';
+      case 1.5:
+        return 'Conservador CP';
+      case 2.5:
+        return 'Moderado';
+      case 3.5:
+        return 'Arrojado';
+      case 4.5:
+        return 'Agressivo';
+      default:
+        return 'Conservador';
     }
-  };
+  }, []);
 
   const sidebarItems: Item[] = useMemo(
     () => [
@@ -224,7 +243,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         id: 6,
         icon: <FaPercentage color={theme.colors.text} />,
         title: 'Perfil do Investidor',
-        value: formData.investorProfile,
+        value: getInvestorProfile(formData.investorProfile),
         type: 'percentage',
         itemCategory: 'investorProfile',
         filled: isFilled(formData.investorProfile),
@@ -233,6 +252,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
           <RangeSlider
             value={formData.investorProfile}
             onSliderChange={value => handleFormChange('investorProfile', value)}
+            onLabelClick={value => handleFormChange('investorProfile', value)}
           />
         )
       },
@@ -296,7 +316,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         )
       }
     ],
-    [formData, handleFormChange, isActive, isFilled]
+    [formData, handleFormChange, isActive, isFilled, getInvestorProfile]
   );
 
   const handleClickItem = useCallback((item: Item) => {
