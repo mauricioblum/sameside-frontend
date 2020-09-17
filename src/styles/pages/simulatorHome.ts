@@ -38,28 +38,24 @@ export const Container = styled.div`
   }
 
   main {
-    > img {
-      width: 100%;
-      height: 56vh;
-      transition: height 0.5s;
+    div.banner {
+      min-height: 580px;
+      background-image: url(banner.png);
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: cover;
 
       @media (max-width: 638px) {
-        height: 50vh;
+        min-height: 480px;
       }
       @media (max-width: 559px) {
-        height: 360px;
+        min-height: 360px;
       }
       @media (max-width: 515px) {
-        height: 340px;
+        min-height: 340px;
       }
       @media (max-width: 415px) {
-        height: 260px;
-      }
-      @media (max-width: 376px) {
-        height: 150px;
-      }
-      @media (max-width: 321px) {
-        height: 130px;
+        min-height: 260px;
       }
     }
 

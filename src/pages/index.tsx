@@ -26,7 +26,8 @@ const SimulatorHome: React.FC = () => {
       </nav>
 
       <main>
-        <img src="banner.jpg" alt="Banner - Woman in beach" />
+        <div className="banner" />
+        {/* <img src="banner.jpg" alt="Banner - Woman in beach" /> */}
         <p>
           Você sabe o que é preciso para trabalhar para uma aposentadoria
           segura? Use esta calculadora para ajudá-lo a criar seu plano de
