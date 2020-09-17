@@ -21,9 +21,10 @@ export const Container = styled.div`
   }
 
   div.nextStep {
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 20px;
+    position: relative;
+    bottom: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 
   div.error {

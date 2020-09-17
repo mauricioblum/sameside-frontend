@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { createContext, useCallback, useState, useContext } from 'react';
+import { useAuth } from './auth';
 
 export interface SimulationData {
   age?: number;
@@ -15,10 +17,24 @@ export interface SimulationData {
   isEditing?: boolean;
 }
 
+export interface SimulationDTO {
+  age: number;
+  familyIncome: number;
+  financialInvestments: number;
+  inssIncome: number;
+  investorProfileId: number;
+  othersIncome: number;
+  retireAge: number;
+  sucessionAge: number;
+  valueSaved: number;
+}
+
 interface SimulationContextData {
   data: SimulationData;
   updateData(data: SimulationData): void;
   clearData(): void;
+
+  runSimulation(simulationData: SimulationDTO): Promise<void>;
 }
 
 const SimulationContext = createContext<SimulationContextData>(
@@ -36,8 +52,19 @@ const SimulationProvider: React.FC = ({ children }) => {
     setData({});
   }, []);
 
+  const runSimulation = useCallback(async (simulationData: SimulationDTO) => {
+    const response = await axios.post(
+      'http://sameside-env.us-west-2.elasticbeanstalk.com/api',
+      simulationData
+    );
+
+    console.log(response.data);
+  }, []);
+
   return (
-    <SimulationContext.Provider value={{ data, updateData, clearData }}>
+    <SimulationContext.Provider
+      value={{ data, updateData, clearData, runSimulation }}
+    >
       {children}
     </SimulationContext.Provider>
   );

@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import SimulatorWizard from 'components/SimulatorWizard';
 import NavHeader from 'components/NavHeader';
 import { useSimulation } from 'hooks/simulation';
+import { useAuth } from 'hooks/auth';
+import { useRouter } from 'next/router';
 import { Container } from '../../styles/pages/simulator/form';
 
 const SimulatorHome: React.FC = () => {
   const { data, updateData } = useSimulation();
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login');
+    }
+  }, [isAuthenticated, router]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <Container>

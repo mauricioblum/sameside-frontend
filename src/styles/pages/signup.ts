@@ -14,6 +14,14 @@ export const Container = styled.div`
     justify-content: center;
     flex-direction: column;
 
+    form {
+      min-width: 440px;
+
+      @media (max-width: 439px) {
+        min-width: auto;
+      }
+    }
+
     img {
       width: 214px;
       margin-bottom: 45px;

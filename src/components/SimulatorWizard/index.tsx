@@ -19,7 +19,7 @@ import InputGroupButtons from 'components/InputGroupButtons';
 import { VaultIcon } from '../../assets/icons';
 import theme from '../../styles/theme';
 import { Container } from './styles';
-import { SimulationData } from '../../hooks/simulation';
+import { SimulationData, useSimulation } from '../../hooks/simulation';
 import Sidebar from './Sidebar';
 import Answer from './Answer';
 
@@ -65,6 +65,8 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
   const [fieldErrors, setFieldErrors] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const { runSimulation } = useSimulation();
+
   const checkIfFieldHasError = useCallback(
     (field: ItemCategory) => fieldErrors.some(err => err.includes(field)),
     [fieldErrors]
@@ -82,9 +84,20 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
     setResultEnabled(true);
     setResultLoading(true);
     await fakeLoadingMethod();
+    await runSimulation({
+      age: formData.age,
+      retireAge: formData.ageRetirement,
+      sucessionAge: formData.lifeExpectancy,
+      valueSaved: formData.savingsMonthlyValue,
+      familyIncome: formData.yearlyFamilyIncome,
+      financialInvestments: formData.currentInvestments,
+      inssIncome: formData.inssProfits,
+      investorProfileId: 1,
+      othersIncome: formData.otherProfits
+    });
     setResultLoading(false);
     onSubmitData({ ...formData, isEditing: initialData.isEditing });
-  }, [formData, onSubmitData, initialData.isEditing]);
+  }, [formData, onSubmitData, runSimulation, initialData.isEditing]);
 
   const handleFormChange = useCallback(
     (field: ItemCategory, value: number) => {
