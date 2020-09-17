@@ -326,14 +326,14 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         )
       },
       {
-        id: 8,
+        id: 7,
         icon: <FaMoneyCheckAlt color={theme.colors.text} />,
         title: 'Renda do INSS e outros regimes de previdência público',
         value: formData.inssProfits,
         type: 'currency',
         itemCategory: 'inssProfits',
         filled: isFilled(formData.inssProfits),
-        active: isActive(8),
+        active: isActive(7),
         description:
           'Previsão de INSS valores atuais, valores esperados de outras previdências do setor público.',
         input: (
@@ -344,14 +344,14 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         )
       },
       {
-        id: 9,
+        id: 8,
         icon: <FaHandHoldingUsd color={theme.colors.text} />,
         title: 'Outras rendas mensais após aposentadoria',
         value: formData.otherProfits,
         type: 'currency',
         itemCategory: 'otherProfits',
         filled: isFilled(formData.otherProfits),
-        active: isActive(9),
+        active: isActive(8),
         description:
           'Considerar aqui outras rendas após aposentadoria, aluguéis, trabalho, pensões, e etc..',
         input: (
@@ -362,7 +362,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         )
       },
       {
-        id: 10,
+        id: 9,
         icon: <FaBaby color={theme.colors.text} />,
         title: 'Número de dependentes',
         value:
@@ -376,7 +376,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         type: 'text',
         itemCategory: 'dependentsNumber',
         filled: isFilled(formData.dependentsNumber),
-        active: isActive(10),
+        active: isActive(9),
         input: (
           <OptionSelect
             identifier="select-dependents"
@@ -421,11 +421,16 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
   }, [formData, fieldErrors]);
 
   const handleOnClickNext = useCallback(() => {
-    if (fieldErrors.length === 0) {
+    if (selectedItem.id === sidebarItems.length - 1) {
+      setSelectedItem({ id: 0 } as Item);
+      return;
+    }
+
+    if (fieldErrors.length === 0 && selectedItem.id < sidebarItems.length - 1) {
       setSelectedItem({ id: selectedItem.id + 1 } as Item);
       validateInputs();
     }
-  }, [fieldErrors, validateInputs, selectedItem.id]);
+  }, [fieldErrors, validateInputs, selectedItem.id, sidebarItems]);
 
   const handleOnClickViewResults = useCallback(() => {
     if (validateInputs() === true) {
@@ -464,13 +469,13 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key === 'Enter' || event.key === 'Tab') {
-        validateInputs();
+        handleOnClickNext();
       }
     };
 
     document.addEventListener('keydown', handleKeyPress, false);
     return () => document.removeEventListener('keydown', handleKeyPress, false);
-  }, [selectedItem.id, validateInputs]);
+  }, [selectedItem.id, handleOnClickNext]);
 
   return (
     <Container>

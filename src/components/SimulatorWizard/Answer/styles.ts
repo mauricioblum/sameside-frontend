@@ -6,6 +6,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding: 25px;
+  position: relative;
 
   div + div > p {
     font-size: 15px;
@@ -17,6 +18,12 @@ export const Container = styled.div`
     color: ${props => props.theme.colors.text};
     margin-top: 86px;
     padding: 0 48px;
+  }
+
+  div.nextStep {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 20px;
   }
 
   div.error {

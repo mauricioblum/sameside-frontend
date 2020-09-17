@@ -121,13 +121,13 @@ const Answer: React.FC<AnswerProps> = ({
           <p>{item.validationMessage}</p>
         </div>
       )}
-      {completed ? (
-        <Button onClick={onClickViewResult}>Ver resultado</Button>
-      ) : (
-        <Button style={{ marginTop: 20 }} onClick={onClickNext}>
-          Avançar
-        </Button>
-      )}
+      <div className="nextStep">
+        {completed ? (
+          <Button onClick={onClickViewResult}>Ver resultado</Button>
+        ) : (
+          <Button onClick={onClickNext}>Avançar</Button>
+        )}
+      </div>
     </Container>
   );
 };
