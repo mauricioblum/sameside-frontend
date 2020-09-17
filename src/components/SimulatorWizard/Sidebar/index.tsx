@@ -32,8 +32,8 @@ const renderValue = (item: Item) => {
   }
 };
 
-const validValue = (field: number | string) =>
-  field !== '' && field !== undefined && field !== null;
+const validValue = (field: number | string | boolean) =>
+  field !== false && field !== '' && field !== undefined && field !== null;
 
 const Sidebar: React.FC<SidebarProps> = ({ items, onClickItem }) => (
   <Container>
