@@ -15,7 +15,6 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = useCallback((data: any) => {
     setError(false);
-    console.log(data);
 
     if (data.username === 'error') {
       setError(true);

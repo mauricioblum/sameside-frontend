@@ -19,7 +19,6 @@ const Report: React.FC = () => {
   const { clearData } = useSimulation();
 
   const handleSubmitForm = useCallback((data: ContactFormData) => {
-    console.log(data);
     setOpen(false);
   }, []);
 

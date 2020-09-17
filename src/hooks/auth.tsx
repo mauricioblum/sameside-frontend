@@ -69,7 +69,6 @@ const AuthProvider: React.FC = ({ children }) => {
     );
 
     const { access_token: token } = response.data;
-    console.log(response.data);
 
     localStorage.setItem('@SameSideSimulator:token', token);
 

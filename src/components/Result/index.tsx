@@ -37,7 +37,6 @@ const Result: React.FC<ResultProps> = ({ data, loading, children }) => {
   const { data: simulationData, updateData } = useSimulation();
 
   const handleSubmitForm = useCallback((formData: ContactFormData) => {
-    console.log(formData);
     setOpen(false);
   }, []);
 

@@ -22,7 +22,6 @@ const Login: React.FC = () => {
   const handleSubmit = useCallback(
     async (data: any) => {
       setError(false);
-      console.log(data);
       const { email, password } = data;
 
       setLoading(true);
@@ -32,6 +31,7 @@ const Login: React.FC = () => {
       } catch (err) {
         setError(true);
         setLoading(false);
+        console.log(err);
       }
     },
     [signIn, router]
