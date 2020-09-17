@@ -31,6 +31,7 @@ const Login: React.FC = () => {
         await router.push('simulator');
       } catch (err) {
         setError(true);
+        setLoading(false);
       }
     },
     [signIn, router]
