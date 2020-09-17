@@ -14,6 +14,7 @@ export interface AnswerProps {
   item?: Item;
   completed?: boolean;
   onClickViewResult?(): void;
+  onClickNext?(): void;
   onEditInputValue?(item: Item, value: number): void;
   isEditing?: boolean;
 }
@@ -22,6 +23,7 @@ const Answer: React.FC<AnswerProps> = ({
   item,
   completed,
   onClickViewResult,
+  onClickNext,
   isEditing,
   onEditInputValue
 }) => {
@@ -119,7 +121,13 @@ const Answer: React.FC<AnswerProps> = ({
           <p>{item.validationMessage}</p>
         </div>
       )}
-      {completed && <Button onClick={onClickViewResult}>Ver resultado</Button>}
+      {completed ? (
+        <Button onClick={onClickViewResult}>Ver resultado</Button>
+      ) : (
+        <Button style={{ marginTop: 20 }} onClick={onClickNext}>
+          Avançar
+        </Button>
+      )}
     </Container>
   );
 };

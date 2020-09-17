@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const StyledButton = styled.button<{ appearence?: string }>`
   cursor: pointer;
@@ -17,6 +18,7 @@ export const StyledButton = styled.button<{ appearence?: string }>`
   text-align: center;
   padding: 9px 20px 12px 20px;
   width: 439px;
+  transition: background 0.2s;
   @media (max-width: 460px) {
     width: 339px;
   }
@@ -25,6 +27,18 @@ export const StyledButton = styled.button<{ appearence?: string }>`
   }
   @media (max-width: 360px) {
     width: 279px;
+  }
+  &:hover {
+    background: ${props =>
+      props.appearence === 'secondary'
+        ? darken(0.1, props.theme.colors.secondary)
+        : darken(0.1, props.theme.colors.primary)};
+  }
+  &:focus {
+    background: ${props =>
+      props.appearence === 'secondary'
+        ? darken(0.1, props.theme.colors.secondary)
+        : darken(0.1, props.theme.colors.primary)};
   }
 `;
 

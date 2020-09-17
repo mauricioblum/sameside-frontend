@@ -28,13 +28,15 @@ export const Container = styled.div`
     }
   }
 
-  button {
+  /* button {
     margin-top: 42px;
     margin-bottom: 42px;
     cursor: pointer;
     border: 0;
     outline: 0;
-    background: ${props => props.theme.colors.primary};
+    background: ${props =>
+    props.theme.colors
+      .primary};
     color: #fff;
     font-weight: bold;
     font-size: 14px;
@@ -48,7 +50,7 @@ export const Container = styled.div`
     @media (max-width: 360px) {
       padding: 9px 100px 11px 100px;
     }
-  }
+  } */
 `;
 
 export const Form = styled.div`

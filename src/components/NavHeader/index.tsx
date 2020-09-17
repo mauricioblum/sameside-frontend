@@ -43,8 +43,8 @@ const NavHeader: React.FC = () => {
             </Link>
           </li>
         </ul>
-        <Link href="/" passHref>
-          <a href="/">
+        <Link href="/signup" passHref>
+          <a href="/signup">
             <FaUser color="#7f8fa4" />
           </a>
         </Link>

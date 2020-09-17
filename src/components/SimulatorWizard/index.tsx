@@ -63,6 +63,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
   const [resultEnabled, setResultEnabled] = useState(false);
   const [resultLoading, setResultLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<string[]>([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const checkIfFieldHasError = useCallback(
     (field: ItemCategory) => fieldErrors.some(err => err.includes(field)),
@@ -87,6 +88,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
 
   const handleFormChange = useCallback(
     (field: ItemCategory, value: number) => {
+      setFieldErrors([]);
       if (field === 'investorProfile') {
         if (value % 1 === 0 && value < 4.5) {
           setFormData({ ...formData, investorProfile: value + 0.5 });
@@ -129,6 +131,13 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
     }
   }, []);
 
+  const lifeExpectancyMinimumValue = useMemo(() => {
+    if (formData.ageRetirement) {
+      return formData.ageRetirement >= 50 ? formData.ageRetirement : 50;
+    }
+    return 1;
+  }, [formData.ageRetirement]);
+
   const sidebarItems: Item[] = useMemo(
     () => [
       {
@@ -144,6 +153,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
           <OptionSelect
             identifier="select-age"
             value={formData.age}
+            startNumberOfOptions={1}
             maxNumberOfOptions={110}
             optionLabels={['anos', 'ano']}
             onSelectValue={value => handleFormChange('age', value)}
@@ -161,14 +171,14 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         filled: isFilled(formData.ageRetirement),
         active: isActive(1),
         hasError: checkIfFieldHasError('ageRetirement'),
-        validationMessage:
-          'Idade da aposentadoria não pode ser menor que a idade atual!',
+        validationMessage: errorMessage,
         description:
           'Idade em que pretende não depender mais financeiramente do trabalho.',
         input: (
           <OptionSelect
             identifier="select-ageRetirement"
             value={formData.ageRetirement}
+            startNumberOfOptions={formData.age + 1 || 1}
             maxNumberOfOptions={110}
             optionLabels={['anos', 'ano']}
             onSelectValue={value => handleFormChange('ageRetirement', value)}
@@ -183,14 +193,17 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         value: formData.lifeExpectancy && `${formData.lifeExpectancy} anos`,
         type: 'text',
         itemCategory: 'lifeExpectancy',
+        hasError: checkIfFieldHasError('lifeExpectancy'),
         filled: isFilled(formData.lifeExpectancy),
         active: isActive(2),
+        validationMessage: errorMessage,
         description:
           'Expectativa de vida média brasileira é 75 anos. Aconselhamos colocar no mínimo 10 anos a mais, que é a idade considerada no relatório padrão.',
         input: (
           <OptionSelect
             identifier="select-lifeExpectancy"
             value={formData.lifeExpectancy}
+            startNumberOfOptions={lifeExpectancyMinimumValue}
             maxNumberOfOptions={110}
             optionLabels={['anos', 'ano']}
             onSelectValue={value => handleFormChange('lifeExpectancy', value)}
@@ -353,7 +366,8 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         icon: <FaBaby color={theme.colors.text} />,
         title: 'Número de dependentes',
         value:
-          formData.dependentsNumber &&
+          formData.dependentsNumber !== null &&
+          formData.dependentsNumber !== undefined &&
           `${
             formData.dependentsNumber === 1
               ? `${formData.dependentsNumber} dependente`
@@ -381,29 +395,60 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
       isActive,
       isFilled,
       getInvestorProfile,
-      checkIfFieldHasError
+      checkIfFieldHasError,
+      lifeExpectancyMinimumValue,
+      errorMessage
     ]
   );
   const validateInputs = useCallback(() => {
-    if (
-      selectedItem.itemCategory === 'ageRetirement' &&
-      formData.ageRetirement <= formData.age
-    ) {
-      setFieldErrors(['ageRetirement']);
+    setFieldErrors([]);
+
+    if (formData.ageRetirement <= formData.age) {
+      setFieldErrors([...fieldErrors, 'ageRetirement']);
+      setErrorMessage(
+        'Idade da aposentadoria não pode ser menor que a idade atual!'
+      );
       return false;
     }
-    setFieldErrors([]);
-    setSelectedItem({ id: selectedItem.id + 1 } as Item);
+    if (formData.lifeExpectancy < formData.ageRetirement) {
+      setFieldErrors([...fieldErrors, 'lifeExpectancy']);
+      setErrorMessage(
+        'Expectativa de vida não pode ser menor que a idade da aposentadoria!'
+      );
+      return false;
+    }
     return true;
-  }, [selectedItem, formData]);
+  }, [formData, fieldErrors]);
+
+  const handleOnClickNext = useCallback(() => {
+    if (fieldErrors.length === 0) {
+      setSelectedItem({ id: selectedItem.id + 1 } as Item);
+      validateInputs();
+    }
+  }, [fieldErrors, validateInputs, selectedItem.id]);
+
+  const handleOnClickViewResults = useCallback(() => {
+    if (validateInputs() === true) {
+      fakeApiCall();
+    }
+  }, [validateInputs, fakeApiCall]);
 
   const handleClickItem = useCallback(
     (item: Item) => {
-      if (validateInputs()) {
-        setSelectedItem(item);
+      if (fieldErrors.length === 0) {
+        if (
+          selectedItem.itemCategory === 'age' ||
+          selectedItem.itemCategory === 'ageRetirement' ||
+          selectedItem.itemCategory === 'lifeExpectancy'
+        ) {
+          validateInputs();
+          setSelectedItem(item);
+        } else {
+          setSelectedItem(item);
+        }
       }
     },
-    [validateInputs]
+    [fieldErrors, validateInputs, selectedItem.itemCategory]
   );
 
   const activeItem = useMemo(
@@ -446,24 +491,22 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
             isEditing
             item={activeItem}
             completed={isAllFieldsFilled}
+            onClickNext={handleOnClickNext}
             onEditInputValue={(item, value) =>
               handleFormChange(item.itemCategory, value)
             }
-            onClickViewResult={() => {
-              fakeApiCall();
-            }}
+            onClickViewResult={handleOnClickViewResults}
           />
         </Result>
       ) : (
         <Answer
           item={activeItem}
           completed={isAllFieldsFilled}
+          onClickNext={handleOnClickNext}
           onEditInputValue={(item, value) =>
             handleFormChange(item.itemCategory, value)
           }
-          onClickViewResult={() => {
-            fakeApiCall();
-          }}
+          onClickViewResult={handleOnClickViewResults}
         />
       )}
     </Container>

@@ -18,8 +18,8 @@ const SimulatorHome: React.FC = () => {
       <nav>
         <img src="sameside-logo.png" alt="SameSide" width="121" height="31" />
         <p>GESTÃO DE PATRIMÔNIO</p>
-        <Link href="/" passHref>
-          <a href="/">
+        <Link href="/signup" passHref>
+          <a href="/signup">
             <FaUser color="#7f8fa4" />
           </a>
         </Link>

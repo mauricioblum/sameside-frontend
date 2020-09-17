@@ -18,6 +18,7 @@ export interface OptionSelectProps {
   maxNumberOfOptions: number;
   /** Array with ["plural-option", "single option"] */
   optionLabels: OptionLabels;
+  startNumberOfOptions?: number;
 }
 
 const customStyles = {
@@ -60,11 +61,13 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
   value,
   identifier,
   maxNumberOfOptions,
-  optionLabels
+  optionLabels,
+  startNumberOfOptions
 }) => {
   const mapOptionValues = () => {
     const options: Options[] = [];
-    for (let i = 1; i <= maxNumberOfOptions; i += 1) {
+
+    for (let i = startNumberOfOptions || 0; i <= maxNumberOfOptions; i += 1) {
       const option = {
         value: i,
         label: i !== 1 ? `${i} ${optionLabels[0]}` : `${i} ${optionLabels[1]}`
