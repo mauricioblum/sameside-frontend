@@ -5,7 +5,7 @@ import Button from 'components/Button';
 import Modal, { ModalTitle } from 'components/Modal';
 import ResultLineChart from 'components/ResultLineChart';
 import ContactForm, { ContactFormData } from 'components/ContactForm';
-import { useSimulation } from 'hooks/simulation';
+import { useSimulation, SimulationDTO } from 'hooks/simulation';
 import { Container } from './styles';
 
 export interface ResultData {
@@ -34,7 +34,7 @@ const Result: React.FC<ResultProps> = ({ data, loading, children }) => {
 
   const [open, setOpen] = useState(false);
 
-  const { data: simulationData, updateData } = useSimulation();
+  const { data: simulationData, updateData, resultData } = useSimulation();
 
   const handleSubmitForm = useCallback((formData: ContactFormData) => {
     setOpen(false);
@@ -56,17 +56,18 @@ const Result: React.FC<ResultProps> = ({ data, loading, children }) => {
     <>
       <Container>
         <h1>
-          As suas economias para aposentadoria se esgotam com {yearsToRunOut}{' '}
-          anos.
+          As suas economias para aposentadoria se esgotam com{' '}
+          {resultData.savingsEnd - new Date().getFullYear()} anos.
         </h1>
         <p>
-          Seu plano fornece <strong>R$ {valueOnRetire}</strong> ao se aposentar.
+          Seu plano fornece{' '}
+          <strong>R$ {resultData.totalValeuYearRetire}</strong> ao se aposentar.
           Isso pressupõe despesas anuais de aposentadoria de{' '}
-          <strong>R$ {expenses}</strong>, que representam{' '}
-          <strong>{percentage}%</strong> da receita do ano passado, de{' '}
-          <strong>R$ {lastYearIncome}</strong>. Isso inclui{' '}
-          <strong>R$ {expensePerYearINSS}</strong> por ano da Previdência
-          Social.
+          <strong>R$ {resultData.annualExpensesAfterAdvice}</strong>, que
+          representam <strong>{resultData.percentageOfRevenue}%</strong> da
+          receita do ano passado, de{' '}
+          <strong>R$ {resultData.annualRevenue}</strong>. Isso inclui{' '}
+          <strong>R$ {0}</strong> por ano da Previdência Social.
         </p>
         <ResultLineChart />
         <Link href="/simulator/report" passHref>

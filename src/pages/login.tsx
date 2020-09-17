@@ -56,9 +56,18 @@ const Login: React.FC = () => {
           </FormField>
 
           {!loading ? (
-            <Button type="submit" appearence="secondary">
-              Entrar
-            </Button>
+            <>
+              <Button type="submit" appearence="secondary">
+                Entrar
+              </Button>
+              <Link href="/signup" passHref>
+                <a href="/signup">
+                  <Button type="button" appearence="primary">
+                    Cadastrar
+                  </Button>
+                </a>
+              </Link>
+            </>
           ) : (
             <LoadingSpinner style={{ marginTop: 40, marginBottom: 20 }} />
           )}

@@ -29,8 +29,27 @@ export interface SimulationDTO {
   valueSaved: number;
 }
 
+export interface SimulationResponseData {
+  annualExpensesAfterAdvice: number;
+  annualRevenue: number;
+  percentageOfRevenue: number;
+  savingsEnd: number;
+  savingsForRetirement: {
+    value: number;
+    year: number;
+  }[];
+  totalSpending: {
+    value: number;
+    year: number;
+  }[];
+  totalValeuYearRetire: number;
+  yearRetire: number;
+  yearSucession: number;
+}
+
 interface SimulationContextData {
   data: SimulationData;
+  resultData: SimulationResponseData;
   updateData(data: SimulationData): void;
   clearData(): void;
 
@@ -43,6 +62,9 @@ const SimulationContext = createContext<SimulationContextData>(
 
 const SimulationProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<SimulationData>({});
+  const [resultData, setResultData] = useState<SimulationResponseData>(
+    {} as SimulationResponseData
+  );
 
   const updateData = useCallback((dataToUpdate: SimulationData) => {
     setData({ ...dataToUpdate });
@@ -58,12 +80,12 @@ const SimulationProvider: React.FC = ({ children }) => {
       simulationData
     );
 
-    console.log(response.data);
+    setResultData(response.data);
   }, []);
 
   return (
     <SimulationContext.Provider
-      value={{ data, updateData, clearData, runSimulation }}
+      value={{ data, resultData, updateData, clearData, runSimulation }}
     >
       {children}
     </SimulationContext.Provider>

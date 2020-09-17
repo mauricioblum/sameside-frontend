@@ -3,7 +3,7 @@ import axios from 'axios';
 // TODO: Env variables for production
 
 const apiUrls = {
-  staging: 'http://sameside-env.us-west-2.elasticbeanstalk.com/',
+  staging: 'https://sameside-api.pvenda.com.br/',
   production: ''
 };
 

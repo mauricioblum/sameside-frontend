@@ -24,9 +24,17 @@ interface SignInCredentials {
   password: string;
 }
 
+interface SignInUpData {
+  username: string;
+  email: string;
+  password: string;
+  phone?: string;
+}
+
 interface AuthContextData {
   signIn: (credentials: SignInCredentials) => Promise<void>;
   signOut(): void;
+  signUp: (credentials: SignInUpData) => Promise<void>;
   updateUser(user: User): void;
   isAuthenticated: boolean;
 }
@@ -83,6 +91,22 @@ const AuthProvider: React.FC = ({ children }) => {
     setData({} as AuthState);
   }, []);
 
+  const signUp = useCallback(async ({ username, email, password, phone }) => {
+    const response = await api.post('/api/signup', {
+      name: username,
+      email,
+      password,
+      phone
+    });
+
+    const { name, email: responseEmail, phone: responsePhone } = response.data;
+
+    localStorage.setItem(
+      '@SameSideSimulator:user',
+      JSON.stringify({ name, responseEmail, responsePhone })
+    );
+  }, []);
+
   const updateUser = useCallback(
     (user: User) => {
       localStorage.setItem('@SameSideSimulator:user', JSON.stringify(user));
@@ -99,6 +123,7 @@ const AuthProvider: React.FC = ({ children }) => {
       value={{
         signIn,
         signOut,
+        signUp,
         updateUser,
         isAuthenticated: data.isAuthenticated
       }}

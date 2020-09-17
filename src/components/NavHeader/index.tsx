@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { FaUser } from 'react-icons/fa';
+import { FaDoorOpen } from 'react-icons/fa';
 
 import { Container } from './styles';
 
@@ -43,9 +43,9 @@ const NavHeader: React.FC = () => {
             </Link>
           </li>
         </ul>
-        <Link href="/signup" passHref>
-          <a href="/signup">
-            <FaUser color="#7f8fa4" />
+        <Link href="/logout" passHref>
+          <a href="/logout">
+            <FaDoorOpen color="#7f8fa4" />
           </a>
         </Link>
       </nav>

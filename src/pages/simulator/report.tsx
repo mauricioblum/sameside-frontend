@@ -16,7 +16,7 @@ import {
 const Report: React.FC = () => {
   const [open, setOpen] = useState(false);
 
-  const { clearData } = useSimulation();
+  const { clearData, resultData } = useSimulation();
 
   const handleSubmitForm = useCallback((data: ContactFormData) => {
     setOpen(false);
@@ -37,13 +37,16 @@ const Report: React.FC = () => {
 
           <section>
             <Subtitle>
-              As suas economias para aposentadoria se esgotam com 94 anos.
+              As suas economias para aposentadoria se esgotam com{' '}
+              {resultData.savingsEnd - new Date().getFullYear()} anos.
             </Subtitle>
             <p>
-              • Seu plano fornece R$ XXX.XXX ao se aposentar. Isso pressupõe
-              despesas anuais de aposentadoria de R$ XX.XXX, que representam 90%
-              da receita do ano passado, de R$ XX.XXX. Isso inclui R$ 0 por ano
-              da Previdência Social.
+              • Seu plano fornece R$ {resultData.savingsEnd} ao se aposentar.
+              Isso pressupõe despesas anuais de aposentadoria de R${' '}
+              {resultData.annualExpensesAfterAdvice}, que representam{' '}
+              {resultData.percentageOfRevenue}% da receita do ano passado, de R$
+              ${resultData.annualRevenue}. Isso inclui R$ {0} por ano da
+              Previdência Social.
             </p>
 
             <ResultLineChart />
