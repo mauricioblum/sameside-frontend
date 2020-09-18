@@ -8,6 +8,7 @@ import Form, {
   FormLabel,
   FormErrorMessage
 } from 'components/Form';
+import { toast } from 'react-toastify';
 import Button from 'components/Button';
 import { useAuth } from 'hooks/auth';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -31,6 +32,9 @@ const Login: React.FC = () => {
       } catch (err) {
         setError(true);
         setLoading(false);
+        toast.error(
+          'Ocorreu um erro ao realizar o login, tente novamente mais tarde.'
+        );
         console.log(err);
       }
     },

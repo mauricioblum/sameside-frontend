@@ -8,6 +8,7 @@ import Form, {
   FormErrorMessage
 } from 'components/Form';
 import Button from 'components/Button';
+import { toast } from 'react-toastify';
 import { useAuth } from 'hooks/auth';
 import { useRouter } from 'next/router';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -28,9 +29,15 @@ const SignUp: React.FC = () => {
       try {
         await signUp({ username, email, phone, password });
         await router.push('login');
+        toast.info(
+          'Cadastro concluído com sucesso! Você agora pode efetuar o login.'
+        );
       } catch (err) {
         setError(true);
         setLoading(false);
+        toast.error(
+          'Ocorreu um erro ao realizar o cadastro, tente novamente mais tarde.'
+        );
         console.log(err);
       }
     },
