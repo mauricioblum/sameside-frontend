@@ -1,6 +1,5 @@
-import axios from 'axios';
 import React, { createContext, useCallback, useState, useContext } from 'react';
-import { useAuth } from './auth';
+import api from 'services/api';
 
 export interface SimulationData {
   age?: number;
@@ -75,17 +74,7 @@ const SimulationProvider: React.FC = ({ children }) => {
   }, []);
 
   const runSimulation = useCallback(async (simulationData: SimulationDTO) => {
-    const response = await axios.post(
-      'https://sameside-api.pvenda.com.br/api/v1',
-      simulationData,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            '@SameSideSimulator:token'
-          )}`
-        }
-      }
-    );
+    const response = await api.post('api/v1', simulationData);
 
     setResultData(response.data);
   }, []);

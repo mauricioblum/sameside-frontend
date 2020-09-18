@@ -5,7 +5,7 @@ import React, {
   useContext,
   useEffect
 } from 'react';
-import api from '../services/api';
+import api, { publicApi } from '../services/api';
 
 interface User {
   id: string;
@@ -62,7 +62,7 @@ const AuthProvider: React.FC = ({ children }) => {
   });
 
   const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post(
+    const response = await publicApi.post(
       '/oauth/token?grant_type=password',
       {},
       {
@@ -92,7 +92,7 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signUp = useCallback(async ({ username, email, password, phone }) => {
-    const response = await api.post('/api/signup', {
+    const response = await publicApi.post('/api/signup', {
       name: username,
       email,
       password,

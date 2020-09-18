@@ -92,7 +92,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
       familyIncome: formData.yearlyFamilyIncome,
       financialInvestments: formData.currentInvestments,
       inssIncome: formData.inssProfits,
-      investorProfileId: 1,
+      investorProfileId: formData.investorProfile + 0.5,
       othersIncome: formData.otherProfits
     });
     setResultLoading(false);

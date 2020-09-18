@@ -11,6 +11,10 @@ const api = axios.create({
   baseURL: apiUrls.staging
 });
 
+export const publicApi = axios.create({
+  baseURL: apiUrls.staging
+});
+
 api.interceptors.response.use(
   response => response,
   error => {
