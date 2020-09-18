@@ -51,7 +51,12 @@ const Report: React.FC = () => {
               inclui R$ 0,00 por ano da Previdência Social.
             </p>
 
-            <ResultLineChart />
+            {resultData.totalSpending && resultData.savingsForRetirement && (
+              <ResultLineChart
+                totalSpending={resultData.totalSpending}
+                savingsForRetirement={resultData.savingsForRetirement}
+              />
+            )}
 
             <InfoBlock>
               <Subtitle>Investimentos Internacional</Subtitle>

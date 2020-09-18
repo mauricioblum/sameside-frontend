@@ -80,7 +80,12 @@ const Result: React.FC<ResultProps> = ({ data, loading, children }) => {
           <strong>R$ {formatCurrency(resultData.annualRevenue)}</strong>. Isso
           inclui <strong>R$ 0,00</strong> por ano da Previdência Social.
         </p>
-        <ResultLineChart />
+        {resultData.totalSpending && resultData.savingsForRetirement && (
+          <ResultLineChart
+            totalSpending={resultData.totalSpending}
+            savingsForRetirement={resultData.savingsForRetirement}
+          />
+        )}
         <Link href="/simulator/report" passHref>
           <a href="/simulator/report">Ver Relatório Completo</a>
         </Link>
