@@ -80,6 +80,7 @@ export const Container = styled.div`
     @media (max-width: 960px) {
       flex-direction: column;
       text-align: center;
+      padding-bottom: 20px;
       button:first-child {
         margin-bottom: 10px;
         margin-right: 0;
@@ -95,6 +96,29 @@ export const Container = styled.div`
     width: 100%;
     border-bottom: 1px solid #e6e6e6;
     padding-bottom: 26px;
+
+    div.buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 0 25px;
+      button:first-child {
+        margin-right: 30px;
+      }
+      @media (max-width: 960px) {
+        flex-direction: column;
+        text-align: center;
+        button {
+          margin-top: 10px;
+        }
+        button:first-child {
+          margin-bottom: 10px;
+          margin-right: 0;
+        }
+      }
+    }
+
     p {
       margin-top: 0;
       font-size: 18px;

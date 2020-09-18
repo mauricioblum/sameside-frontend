@@ -66,6 +66,7 @@ const SimulationProvider: React.FC = ({ children }) => {
   );
 
   const updateData = useCallback((dataToUpdate: SimulationData) => {
+    console.log(dataToUpdate);
     setData({ ...dataToUpdate });
   }, []);
 

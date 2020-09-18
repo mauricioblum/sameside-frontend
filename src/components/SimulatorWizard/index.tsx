@@ -65,25 +65,16 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
   const [fieldErrors, setFieldErrors] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { runSimulation } = useSimulation();
+  const { runSimulation, data } = useSimulation();
 
   const checkIfFieldHasError = useCallback(
     (field: ItemCategory) => fieldErrors.some(err => err.includes(field)),
     [fieldErrors]
   );
 
-  const fakeLoadingMethod = () =>
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        console.log('waiting...');
-        resolve();
-      }, 1500);
-    });
-
-  const fakeApiCall = useCallback(async () => {
+  const handleRunSimulation = useCallback(async () => {
     setResultEnabled(true);
     setResultLoading(true);
-    await fakeLoadingMethod();
     await runSimulation({
       age: formData.age,
       retireAge: formData.ageRetirement,
@@ -96,8 +87,11 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
       othersIncome: formData.otherProfits
     });
     setResultLoading(false);
-    onSubmitData({ ...formData, isEditing: initialData.isEditing });
-  }, [formData, onSubmitData, runSimulation, initialData.isEditing]);
+    onSubmitData({
+      ...formData,
+      isEditing: data.isEditing ? false : initialData.isEditing
+    });
+  }, [formData, onSubmitData, runSimulation, initialData.isEditing, data]);
 
   const handleFormChange = useCallback(
     (field: ItemCategory, value: number) => {
@@ -447,9 +441,9 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
 
   const handleOnClickViewResults = useCallback(() => {
     if (validateInputs() === true) {
-      fakeApiCall();
+      handleRunSimulation();
     }
-  }, [validateInputs, fakeApiCall]);
+  }, [validateInputs, handleRunSimulation]);
 
   const handleClickItem = useCallback(
     (item: Item) => {
@@ -496,17 +490,10 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
       {resultEnabled ? (
         <Result
           loading={resultLoading}
-          data={{
-            yearsToRunOut: 92,
-            valueOnRetire: 624.48,
-            expenses: 68.205,
-            percentage: 90,
-            lastYearIncome: 75.783,
-            expensePerYearINSS: 0
-          }}
+          onClickSimulate={handleOnClickViewResults}
         >
           <Answer
-            isEditing
+            isEditing={data.isEditing}
             item={activeItem}
             completed={isAllFieldsFilled}
             onClickNext={handleOnClickNext}
@@ -518,6 +505,7 @@ const SimulatorWizard: React.FC<SimulatorProps> = ({
         </Result>
       ) : (
         <Answer
+          isEditing={data.isEditing}
           item={activeItem}
           completed={isAllFieldsFilled}
           onClickNext={handleOnClickNext}

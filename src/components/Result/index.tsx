@@ -19,20 +19,15 @@ export interface ResultData {
 }
 
 export interface ResultProps {
-  data: ResultData;
   loading?: boolean;
+  onClickSimulate?(): void;
 }
 
-const Result: React.FC<ResultProps> = ({ data, loading, children }) => {
-  const {
-    yearsToRunOut,
-    valueOnRetire,
-    expenses,
-    percentage,
-    lastYearIncome,
-    expensePerYearINSS
-  } = data;
-
+const Result: React.FC<ResultProps> = ({
+  loading,
+  onClickSimulate,
+  children
+}) => {
   const [open, setOpen] = useState(false);
 
   const { data: simulationData, updateData, resultData } = useSimulation();
@@ -59,9 +54,9 @@ const Result: React.FC<ResultProps> = ({ data, loading, children }) => {
         {simulationData.isEditing && (
           <div className="edit">
             {children}
-            <Button appearence="secondary" onClick={() => setOpen(true)}>
-              Solicite uma reunião de aconselhamento
-            </Button>
+            <div className="buttons">
+              <Button onClick={onClickSimulate}>Simular novamente</Button>
+            </div>
           </div>
         )}
         <h1>
@@ -89,13 +84,21 @@ const Result: React.FC<ResultProps> = ({ data, loading, children }) => {
         <Link href="/simulator/report" passHref>
           <a href="/simulator/report">Ver Relatório Completo</a>
         </Link>
-        {!simulationData.isEditing && (
+        {!simulationData.isEditing ? (
           <div className="buttons">
             <Button onClick={handleEdit}>Alterar dados da simulação</Button>
             <Button appearence="secondary" onClick={() => setOpen(true)}>
               Solicite uma reunião de aconselhamento
             </Button>
           </div>
+        ) : (
+          <Button
+            style={{ margin: '20px 0' }}
+            appearence="secondary"
+            onClick={() => setOpen(true)}
+          >
+            Solicite uma reunião de aconselhamento
+          </Button>
         )}
       </Container>
       <Modal isOpen={open} onClickClose={() => setOpen(false)}>

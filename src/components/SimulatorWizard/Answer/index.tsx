@@ -122,7 +122,7 @@ const Answer: React.FC<AnswerProps> = ({
         </div>
       )}
       <div className="nextStep">
-        {completed ? (
+        {completed && !isEditing ? (
           <Button onClick={onClickViewResult}>Ver resultado</Button>
         ) : (
           <Button onClick={onClickNext}>Avançar</Button>
