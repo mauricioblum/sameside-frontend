@@ -7,6 +7,7 @@ import Modal, { ModalTitle } from 'components/Modal';
 import Button from 'components/Button';
 import ContactForm, { ContactFormData } from 'components/ContactForm';
 import { useSimulation } from 'hooks/simulation';
+import { formatCurrency } from 'helpers/formatCurrency';
 import {
   Container,
   InfoBlock,
@@ -38,15 +39,16 @@ const Report: React.FC = () => {
           <section>
             <Subtitle>
               As suas economias para aposentadoria se esgotam com{' '}
-              {resultData.savingsEnd - new Date().getFullYear()} anos.
+              {resultData.savingsEnd} anos.
             </Subtitle>
             <p>
-              • Seu plano fornece R$ {resultData.savingsEnd} ao se aposentar.
+              • Seu plano fornece R${' '}
+              {formatCurrency(resultData.totalValeuYearRetire)} ao se aposentar.
               Isso pressupõe despesas anuais de aposentadoria de R${' '}
-              {resultData.annualExpensesAfterAdvice}, que representam{' '}
-              {resultData.percentageOfRevenue}% da receita do ano passado, de R$
-              ${resultData.annualRevenue}. Isso inclui R$ {0} por ano da
-              Previdência Social.
+              {formatCurrency(resultData.annualExpensesAfterAdvice)}, que
+              representam {resultData.percentageOfRevenue}% da receita do ano
+              passado, de R$ ${formatCurrency(resultData.annualRevenue)}. Isso
+              inclui R$ 0,00 por ano da Previdência Social.
             </p>
 
             <ResultLineChart />
@@ -112,7 +114,7 @@ const Report: React.FC = () => {
             </InfoBlock>
 
             <div className="buttons">
-              <Link href="/simulator" passHref>
+              <Link href="/simulator">
                 <Button onClick={clearData}>Nova Simulação</Button>
               </Link>
               <Button appearence="secondary" onClick={() => setOpen(true)}>

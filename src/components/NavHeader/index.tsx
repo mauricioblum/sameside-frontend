@@ -44,7 +44,7 @@ const NavHeader: React.FC = () => {
           </li>
         </ul>
         <Link href="/logout" passHref>
-          <a href="/logout">
+          <a href="/logout" title="Sair">
             <FaDoorOpen color="#7f8fa4" />
           </a>
         </Link>

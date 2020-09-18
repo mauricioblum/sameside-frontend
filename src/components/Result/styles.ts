@@ -25,6 +25,7 @@ export const Container = styled.div`
     line-height: 0.96;
     letter-spacing: -0.81px;
     text-align: center;
+    margin-top: 26px;
     color: ${props => props.theme.colors.text};
   }
 
@@ -85,14 +86,12 @@ export const Container = styled.div`
   }
 
   div.edit {
-    margin-top: 21px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    border-top: 1px solid #e6e6e6;
-    padding-top: 26px;
+    border-bottom: 1px solid #e6e6e6;
     padding-bottom: 26px;
     p {
       margin-top: 0;

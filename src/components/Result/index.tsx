@@ -6,6 +6,7 @@ import Modal, { ModalTitle } from 'components/Modal';
 import ResultLineChart from 'components/ResultLineChart';
 import ContactForm, { ContactFormData } from 'components/ContactForm';
 import { useSimulation, SimulationDTO } from 'hooks/simulation';
+import { formatCurrency } from 'helpers/formatCurrency';
 import { Container } from './styles';
 
 export interface ResultData {
@@ -55,34 +56,37 @@ const Result: React.FC<ResultProps> = ({ data, loading, children }) => {
   return (
     <>
       <Container>
+        {simulationData.isEditing && (
+          <div className="edit">
+            {children}
+            <Button appearence="secondary" onClick={() => setOpen(true)}>
+              Solicite uma reunião de aconselhamento
+            </Button>
+          </div>
+        )}
         <h1>
           As suas economias para aposentadoria se esgotam com{' '}
-          {resultData.savingsEnd - new Date().getFullYear()} anos.
+          {resultData.savingsEnd} anos.
         </h1>
         <p>
           Seu plano fornece{' '}
-          <strong>R$ {resultData.totalValeuYearRetire}</strong> ao se aposentar.
-          Isso pressupõe despesas anuais de aposentadoria de{' '}
-          <strong>R$ {resultData.annualExpensesAfterAdvice}</strong>, que
-          representam <strong>{resultData.percentageOfRevenue}%</strong> da
-          receita do ano passado, de{' '}
-          <strong>R$ {resultData.annualRevenue}</strong>. Isso inclui{' '}
-          <strong>R$ {0}</strong> por ano da Previdência Social.
+          <strong>R$ {formatCurrency(resultData.totalValeuYearRetire)}</strong>{' '}
+          ao se aposentar. Isso pressupõe despesas anuais de aposentadoria de{' '}
+          <strong>
+            R$ {formatCurrency(resultData.annualExpensesAfterAdvice)}
+          </strong>
+          , que representam <strong>{resultData.percentageOfRevenue}%</strong>{' '}
+          da receita do ano passado, de{' '}
+          <strong>R$ {formatCurrency(resultData.annualRevenue)}</strong>. Isso
+          inclui <strong>R$ 0,00</strong> por ano da Previdência Social.
         </p>
         <ResultLineChart />
         <Link href="/simulator/report" passHref>
           <a href="/simulator/report">Ver Relatório Completo</a>
         </Link>
-        {!simulationData.isEditing ? (
+        {!simulationData.isEditing && (
           <div className="buttons">
             <Button onClick={handleEdit}>Alterar dados da simulação</Button>
-            <Button appearence="secondary" onClick={() => setOpen(true)}>
-              Solicite uma reunião de aconselhamento
-            </Button>
-          </div>
-        ) : (
-          <div className="edit">
-            {children}
             <Button appearence="secondary" onClick={() => setOpen(true)}>
               Solicite uma reunião de aconselhamento
             </Button>

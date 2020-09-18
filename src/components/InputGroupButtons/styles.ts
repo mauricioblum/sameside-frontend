@@ -34,7 +34,7 @@ export const Container = styled.div`
     padding-left: 15px;
     padding-right: 15px;
 
-    &:hover {
+    &:active {
       background: ${props => props.theme.colors.secondary};
       color: #fff;
     }

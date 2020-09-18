@@ -76,7 +76,7 @@ const SimulationProvider: React.FC = ({ children }) => {
 
   const runSimulation = useCallback(async (simulationData: SimulationDTO) => {
     const response = await axios.post(
-      'http://sameside-env.us-west-2.elasticbeanstalk.com/api',
+      'https://sameside-api.pvenda.com.br/api',
       simulationData
     );
 
