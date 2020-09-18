@@ -46,7 +46,7 @@ const ResultLineChart: React.FC<ResultLineChartProps> = ({
     <ResponsiveContainer width="70%" height={207} minWidth={300}>
       <LineChart data={resultChartData} margin={{ left: -5, right: 16 }}>
         <CartesianGrid />
-        <XAxis dataKey="year" />
+        <XAxis dataKey="valueSpent" />
         <YAxis dataKey="valueSaved">
           <Label
             position="insideLeft"
