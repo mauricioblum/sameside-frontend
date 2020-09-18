@@ -76,7 +76,7 @@ const SimulationProvider: React.FC = ({ children }) => {
 
   const runSimulation = useCallback(async (simulationData: SimulationDTO) => {
     const response = await axios.post(
-      'https://sameside-api.pvenda.com.br/api',
+      'https://sameside-api.pvenda.com.br/api/v1',
       simulationData
     );
 
