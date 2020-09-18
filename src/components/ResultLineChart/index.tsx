@@ -43,8 +43,8 @@ const ResultLineChart: React.FC<ResultLineChartProps> = ({
   }, [totalSpending, savingsForRetirement]);
 
   return (
-    <ResponsiveContainer width="70%" height={207}>
-      <LineChart data={resultChartData}>
+    <ResponsiveContainer width="70%" height={207} minWidth={300}>
+      <LineChart data={resultChartData} margin={{ left: -5, right: 16 }}>
         <CartesianGrid />
         <XAxis dataKey="valueSpent" />
         <YAxis dataKey="valueSaved">

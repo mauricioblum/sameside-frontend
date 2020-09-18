@@ -11,6 +11,7 @@ export const StyledButton = styled.button<{ appearence?: string }>`
       ? props.theme.colors.secondary
       : props.theme.colors.primary};
   color: #fff;
+  font-family: 'Circular Std', sans-serif;
   font-weight: bold;
   font-size: 14px;
   letter-spacing: -0.21px;

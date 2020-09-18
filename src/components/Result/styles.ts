@@ -21,6 +21,8 @@ export const Container = styled.div`
 
   h1 {
     font-size: 26px;
+    padding-left: 16px;
+    padding-right: 16px;
     font-weight: bold;
     line-height: 0.96;
     letter-spacing: -0.81px;
